@@ -1,4 +1,4 @@
-# emergencyPreparedness
+# Emergency Preparedness Application
 # Overview
 An Emergency Preparedness Application that will track items on hand.
 
