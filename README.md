@@ -35,5 +35,7 @@ An Emergency Preparedness Application that will track items on hand.
 # Useful Websites
 
 <!--{Make a list of websites that you found helpful in this project}-->
+* Example [Web Site Name](http://url.link.goes.here)
 
 # Future Work
+* Add Frontend
