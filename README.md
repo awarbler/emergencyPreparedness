@@ -13,7 +13,7 @@ An Emergency Preparedness Application that will track items on hand.
 <!--{Describe your purpose for writing this software.}-->
 
 <!--{Provide a link to your YouTube demonstration.  It should be a 4-5 minute demo of the software running and a walkthrough of the code.  Focus should be on sharing what you learned about the language syntax.}-->
-<!-- Example [Kotlin Quiz Application ](https://youtu.be/EdtVhSSL20s) -->
+* Example YouTube Video [Kotlin Quiz Application ](https://youtu.be/00000000000) -->
 
 # Development Environment
 
@@ -25,11 +25,12 @@ An Emergency Preparedness Application that will track items on hand.
 * Insomnia
 * Visual Studio Code
 * Node.js Express
-* 
+
+
 # Collaborators
+* Sarah Osguthrope
+* Nathan Shore
 * Anita Woodford
-* 
-* 
 
 
 # Useful Websites
