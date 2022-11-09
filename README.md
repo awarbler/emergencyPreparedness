@@ -5,6 +5,7 @@ An Emergency Preparedness Application that will track items on hand.
 # Prereq
 * Node.js
 * Javascript
+* Git
 * Mongoose
 * Mongodb
 * Render
@@ -18,13 +19,14 @@ An Emergency Preparedness Application that will track items on hand.
 # Development Environment
 
 <!--{Describe the tools that you used to develop the software}--> <!--{Describe the programming language that you used and any libraries.}-->
-* GitHub
-* Render
+* GitHub - to store the code
+* Render - to deploy the code
 * Mongodb Compass / Atlas
 * oAuth 
 * Insomnia
 * Visual Studio Code
 * Node.js Express
+* YouTube - To demonstrate the functionality of the code
 
 
 # Collaborators
