@@ -2,11 +2,14 @@ const express = require('express');
 
 const openCors = require('../middleware/openCors');
 const cors = require('cors');
-const { Router } = require('express');
+// const { Router } = require('express');
+
 
 //routes
 
 const router = express.Router();
+
+const userRoutes = require('./user');
 
 router.options(
   cors({
@@ -15,6 +18,8 @@ router.options(
   })
 );
 
+
 router.use([openCors, express.json()]);
+router.use('/user', userRoutes);
 
 module.exports = router;

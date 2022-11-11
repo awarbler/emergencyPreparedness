@@ -1,0 +1,2 @@
+### Testing user getAll
+GET http://localhost:8080/users
