@@ -28,6 +28,20 @@ An Emergency Preparedness Application that will track items on hand.
 * Node.js Express
 * YouTube - To demonstrate the functionality of the code
 
+# File Structure
+* config
+* controllers
+* initializers
+* middleware
+* models
+* routes
+* .env
+* .gitignore
+* app.js
+* swagger.js
+* swagger.json
+
+
 
 # Collaborators
 * Sarah Osguthrope
