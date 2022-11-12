@@ -1,2 +1,29 @@
-### Testing user getAll
+### Testing getAllUsers
 GET http://localhost:8080/users
+
+### Testing getUserByEmail
+GET http://localhost:8080/users/sarahso@gmail.com
+
+### Testing createNewUser 
+POST http://localhost:8080/users HTTP/1.1
+content-type: application/json
+
+{
+    "userName": "testingUser1",
+    "email": "testingUser1@gmail.com",
+    "password": "testingUser1!"
+}
+
+### Testing updateUser
+PUT http://localhost:8080/users/testingUser1@gmail.com HTTP/1.1
+content-type: application/json
+
+{
+    "userName": "testingUser2",
+    "email": "testingUser2@gmail.com",
+    "password": "testingUser2!"
+}
+
+### Testing deleteUser
+DELETE http://localhost:8080/users/testingUser2@gmail.com HTTP/1.1
+content-type: application/json

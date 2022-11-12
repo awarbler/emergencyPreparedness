@@ -20,6 +20,6 @@ router.options(
 
 
 router.use([openCors, express.json()]);
-router.use('/user', userRoutes);
+router.use('/users', userRoutes);
 
 module.exports = router;
