@@ -40,17 +40,11 @@ An Emergency Preparedness Application that will track items on hand.
 * app.js
 * swagger.js
 * swagger.json
-
-# Hello 
-
 # Collaborators
 * Sarah Osguthrope
 * Nathan Shore
 * Anita Woodford
-
-
 # Useful Websites
-
 <!--{Make a list of websites that you found helpful in this project}-->
 * Example [Web Site Name](http://url.link.goes.here)
 
