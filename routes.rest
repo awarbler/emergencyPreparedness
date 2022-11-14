@@ -27,3 +27,36 @@ content-type: application/json
 ### Testing deleteUser
 DELETE http://localhost:8080/users/testingUser2@gmail.com HTTP/1.1
 content-type: application/json
+
+
+
+
+### Testing getAllFirstAidItems
+GET http://localhost:8080/firstAid
+
+### Testing getFirstAidItemByName
+GET http://localhost:8080/firstAid/Band-aid
+
+### Testing createNewFirstAidItem 
+POST http://localhost:8080/firstAid HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Band-aid",
+    "quantity": "12",
+    "purchaseDate": "11/12/2022"
+}
+
+### Testing updateFirstAidItem
+PUT http://localhost:8080/firstAid/Band-aid HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Band-aids",
+    "quantity": "24",
+    "purchaseDate": "11/13/2022"
+}
+
+### Testing deleteFirstAidItem
+DELETE http://localhost:8080/firstAid/Band-aids HTTP/1.1
+content-type: application/json
