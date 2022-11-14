@@ -5,11 +5,14 @@
     "description": "EPA",
     "version": "1.0.0"
   },
-  "host": "",
+  "host": "localhost:3000",
   "basePath": "/",
   "schemes": [
+
     "http",
     "https"
+
+    "http"
   ],
   "paths": {
     "{cors({origin*}": {
@@ -160,7 +163,8 @@
         }
       }
     },
-    "/hygienes/": {
+
+    "/food/": {
       "get": {
         "description": "",
         "parameters": [],
@@ -182,13 +186,29 @@
             "schema": {
               "type": "object",
               "properties": {
-                "name": {
+
+                "foodName": {
+                  "example": "any"
+                },
+                "brandName": {
+
                   "example": "any"
                 },
                 "quantity": {
                   "example": "any"
                 },
-                "hygienePurchaseDate": {
+
+                "purchaseDate": {
+                  "example": "any"
+                },
+                "expirationDate": {
+                  "example": "any"
+                },
+                "orderNextByDate": {
+                  "example": "any"
+                },
+                "description": {
+
                   "example": "any"
                 }
               }
@@ -208,12 +228,15 @@
         }
       }
     },
-    "/hygienes/{name}": {
+
+    "/food/{foodName}": {
+
       "get": {
         "description": "",
         "parameters": [
           {
-            "name": "name",
+
+            "name": "foodName",
             "in": "path",
             "required": true,
             "type": "string"
@@ -235,7 +258,9 @@
         "description": "",
         "parameters": [
           {
-            "name": "name",
+
+            "name": "foodName",
+
             "in": "path",
             "required": true,
             "type": "string"
@@ -246,13 +271,29 @@
             "schema": {
               "type": "object",
               "properties": {
-                "name": {
+
+                "foodName": {
+                  "example": "any"
+                },
+                "brandName": {
+
                   "example": "any"
                 },
                 "quantity": {
                   "example": "any"
                 },
-                "hygienePurchaseDate": {
+
+                "purchaseDate": {
+                  "example": "any"
+                },
+                "expirationDate": {
+                  "example": "any"
+                },
+                "orderNextByDate": {
+                  "example": "any"
+                },
+                "description": {
+
                   "example": "any"
                 }
               }
@@ -275,7 +316,8 @@
         "description": "",
         "parameters": [
           {
-            "name": "name",
+
+            "name": "foodName",
             "in": "path",
             "required": true,
             "type": "string"

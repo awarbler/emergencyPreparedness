@@ -11,6 +11,7 @@ const doc = {
   schemes: ['http', 'https']
   //Authorization: {type: "apiKey", name: 'Authorization', in: 'header', description:'Authorization token (Bearer),
   // example: 'Bearer<token>'}
+  schemes: ['http,https']
 };
 
 const outputFile = 'swagger.json';
