@@ -1,7 +1,13 @@
 const express = require('express');
-
 //routes
 const router = express.Router();
+// const { body, param } = require('express-validator');
+// const {
+//     createValidator,
+//     showValidator,
+//     updateValidator,
+//     destroyValidator
+// } = require('../validators/firstAidValidator.js');
 
 const firstAidController = require('../controllers/firstAid');
 
