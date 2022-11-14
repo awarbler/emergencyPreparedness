@@ -1,0 +1,122 @@
+const Hygiene = require('../models/hygiene');
+
+const getAllHygienes = async (req, res) => {
+  try {
+    Hygiene.find({})
+      .then((data) => {
+        res.status(200).send(data);
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message: err.message || 'Some error occurred while retrieving Hygienes.'
+        });
+      });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const getHygieneByName = async (req, res) => {
+  try {
+    const name = req.params.name;
+
+    if (!name) {
+      res.status(400).send('Must include email.');
+    }
+
+    Hygiene.find({ name: name })
+      .then((data) => {
+        res.status(200).send(data[0]);
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message: err.message || 'Some error occurred while retrieving Hygiene.'
+        });
+      });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const createNewHygiene = async (req, res) => {
+  try {
+    if (!req.body.name || !req.body.quantity || !req.body.hygienePurchaseDate) {
+      res.status(400).send({ message: 'Input can not be empty!' });
+      return;
+    }
+
+    const hygiene = new Hygiene(req.body);
+    hygiene
+      .save()
+      .then((data) => {
+        console.log(data);
+        res.status(201).send(data);
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message: err.message || 'Some error occurred while creating the user.'
+        });
+      });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+const updateHygiene = async (req, res) => {
+  try {
+    const email = req.params.email;
+    //   if (!email) {
+    //     res.status(400).send({ message: 'Invalid email Supplied' });
+    //     return;
+    //   }
+
+    if (!req.body.name || !req.body.quantity || !req.body.hygienePurchaseDate) {
+      res.status(400).send({ message: 'Input can not be empty!' });
+      return;
+    }
+
+    Hygiene.findOne({ name: name }, function (err, user) {
+      hygiene.name = req.body.name;
+      hygiene.quantity = req.body.quantity;
+      hygiene.hygienePurchaseDate = req.body.hygienePurchaseDate;
+      hygiene.save(function (err) {
+        if (err) {
+          res.status(500).json(err || 'Some error occurred while updating the user.');
+        } else {
+          res.status(204).send();
+        }
+      });
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+const deleteHygiene = async (req, res) => {
+  try {
+    const name = req.params.name;
+
+    if (!name) {
+      res.status(400).send({ message: 'Email Invalid' });
+      return;
+    }
+
+    Hygiene.deleteOne({ name: name }, (err, result) => {
+      if (err) {
+        res.status(500).json(err || 'Some error occurred while deleting the user.');
+      } else {
+        res.status(200).send(result);
+      }
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+module.exports = {
+  getAllHygienes,
+  getHygieneByName,
+  createNewHygiene,
+  updateHygiene,
+  deleteHygiene
+};

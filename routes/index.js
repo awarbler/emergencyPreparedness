@@ -9,9 +9,13 @@ const cors = require('cors');
 //routes
 const docRoutes = require('./swagger');
 const userRoutes = require('./user');
+
+const hygieneRoutes = require('./hygiene');
+
 const firstAidRoutes = require('./firstAid');
 
 const foodRoutes = require('./food')
+
 
 router.options(
   cors({
@@ -22,8 +26,12 @@ router.options(
 router.use('/', docRoutes);
 router.use([openCors, express.json()]);
 router.use('/users', userRoutes);
+
+router.use('/hygienes', hygieneRoutes);
+
 router.use('/firstAid', firstAidRoutes);
 
 router.use('/food',foodRoutes);
+
 
 module.exports = router;

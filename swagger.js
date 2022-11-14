@@ -8,6 +8,9 @@ const doc = {
     description: 'EPA'
   },
   host: '',
+  schemes: ['http', 'https']
+  //Authorization: {type: "apiKey", name: 'Authorization', in: 'header', description:'Authorization token (Bearer),
+  // example: 'Bearer<token>'}
   schemes: ['http,https']
 };
 
