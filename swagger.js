@@ -7,8 +7,10 @@ const doc = {
     title: 'Emergency Preparedness application',
     description: 'EPA'
   },
-  host: 'localhost:8080',
-  schemes: ['http']
+  host: '',
+  schemes: ['http', 'https']
+  //Authorization: {type: "apiKey", name: 'Authorization', in: 'header', description:'Authorization token (Bearer),
+  // example: 'Bearer<token>'}
 };
 
 const outputFile = 'swagger.json';
