@@ -7,13 +7,7 @@
   },
   "host": "localhost:3000",
   "basePath": "/",
-  "schemes": [
-
-    "http",
-    "https"
-
-    "http"
-  ],
+  "schemes": ["http", "http"],
   "paths": {
     "{cors({origin*}": {
       "options": {
@@ -186,12 +180,10 @@
             "schema": {
               "type": "object",
               "properties": {
-
                 "foodName": {
                   "example": "any"
                 },
                 "brandName": {
-
                   "example": "any"
                 },
                 "quantity": {
@@ -208,7 +200,6 @@
                   "example": "any"
                 },
                 "description": {
-
                   "example": "any"
                 }
               }
@@ -230,12 +221,10 @@
     },
 
     "/food/{foodName}": {
-
       "get": {
         "description": "",
         "parameters": [
           {
-
             "name": "foodName",
             "in": "path",
             "required": true,
@@ -258,7 +247,6 @@
         "description": "",
         "parameters": [
           {
-
             "name": "foodName",
 
             "in": "path",
@@ -271,12 +259,10 @@
             "schema": {
               "type": "object",
               "properties": {
-
                 "foodName": {
                   "example": "any"
                 },
                 "brandName": {
-
                   "example": "any"
                 },
                 "quantity": {
@@ -293,7 +279,6 @@
                   "example": "any"
                 },
                 "description": {
-
                   "example": "any"
                 }
               }
@@ -316,7 +301,6 @@
         "description": "",
         "parameters": [
           {
-
             "name": "foodName",
             "in": "path",
             "required": true,
