@@ -10,6 +10,8 @@ const cors = require('cors');
 const docRoutes = require('./swagger');
 const userRoutes = require('./user');
 
+const foodRoutes = require('./food')
+
 router.options(
   cors({
     origin: '*',
@@ -19,5 +21,7 @@ router.options(
 router.use('/', docRoutes);
 router.use([openCors, express.json()]);
 router.use('/users', userRoutes);
+
+router.use('/food',foodRoutes);
 
 module.exports = router;
