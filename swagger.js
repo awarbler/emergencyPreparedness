@@ -7,8 +7,8 @@ const doc = {
     title: 'Emergency Preparedness application',
     description: 'EPA'
   },
-  host: 'localhost:8080',
-  schemes: ['http']
+  host: '',
+  schemes: ['http,https']
 };
 
 const outputFile = 'swagger.json';

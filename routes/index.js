@@ -11,6 +11,8 @@ const docRoutes = require('./swagger');
 const userRoutes = require('./user');
 const firstAidRoutes = require('./firstAid');
 
+const foodRoutes = require('./food')
+
 router.options(
   cors({
     origin: '*',
@@ -21,5 +23,7 @@ router.use('/', docRoutes);
 router.use([openCors, express.json()]);
 router.use('/users', userRoutes);
 router.use('/firstAid', firstAidRoutes);
+
+router.use('/food',foodRoutes);
 
 module.exports = router;
