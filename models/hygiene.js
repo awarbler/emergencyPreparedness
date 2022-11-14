@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 
 const hygieneSchema = new Schema({
   hygieneName: { type: String },
-  hygieneQuantity: { type: Number },
+  hygieneQuantity: { type: String },
   hygienePurchaseDate: { type: String }
 });
 
