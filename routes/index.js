@@ -10,6 +10,7 @@ const userRoutes = require('./user');
 const hygieneRoutes = require('./hygiene');
 const firstAidRoutes = require('./firstAid');
 const foodRoutes = require('./food');
+const authorizationRoutes = require('./authorization');
 
 router.options(
   cors({
@@ -24,5 +25,6 @@ router.use('/users', userRoutes);
 router.use('/hygienes', hygieneRoutes);
 router.use('/firstAid', firstAidRoutes);
 router.use('/food', foodRoutes);
+router.use('/authorization', authorizationRoutes);
 
 module.exports = router;
