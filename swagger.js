@@ -8,7 +8,9 @@ const doc = {
     description: 'EPA'
   },
   host: '',
-  schemes: ['http,https']
+  schemes: ['http', 'https']
+  //Authorization: {type: "apiKey", name: 'Authorization', in: 'header', description:'Authorization token (Bearer),
+  // example: 'Bearer<token>'}
 };
 
 const outputFile = 'swagger.json';
