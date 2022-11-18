@@ -49,7 +49,7 @@ const findOrCreateUser = async (authZeroUserJson) => {
   // no user exists in our db yet, les create one with the info we got from auth0
 
   const newUser = await User.create({
-    identifier: authoZeroJson.sub,
+    identifier: authZeroUserJson.sub,
     email: authZeroUserJson.email,
     givenName: authZeroUserJson.given_name,
     familyName: authZeroUserJson.family_name,
