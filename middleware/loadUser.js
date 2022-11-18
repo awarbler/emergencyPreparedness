@@ -17,6 +17,7 @@ const loadUser = async (req, res, next) => {
   // req.user = user ;
   // next(); } catch(_error){next();}};
 
+  // added try and error block
   try {
   // console.log(req.headers.authorization);
   if (!req.headers.authorization) next();
