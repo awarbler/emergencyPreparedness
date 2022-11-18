@@ -16,11 +16,27 @@ const loadUser = async (req, res, next) => {
   // can access it in controllers \o/
   // req.user = user ;
   // next(); } catch(_error){next();}};
-  console.log(req.headers.authorization);
+
+  try {
+  // console.log(req.headers.authorization);
+  if (!req.headers.authorization) next();
+
   const authZeroUser = await fetchAuthZeroUser(req.headers.authorization);
+
   const user = await findOrCreateUser(authZeroUser);
   req.user = user;
   next();
+  } catch (_error) {
+    next();
+  }
+};
+
+const fetchAuthZeroUser = async (authorizationValue) => {
+  const response = await fetch(`${appConfig.authorizationHost}/userinfo`, {
+    headers: { Authorization: authorizationValue }
+  });
+
+  return response.json();
 };
 
 const findOrCreateUser = async (authZeroUserJson) => {
@@ -42,11 +58,7 @@ const findOrCreateUser = async (authZeroUserJson) => {
   return newUser;
 };
 
-const fetchAuthZeroUser = async (authorizationValue) => {
-  const response = await fetch(`${appConfig.authorizationHost}/userinfo`, {
-    headers: { Authorization: authorizationValue }
-  });
-};
+
 
 // const parseToken = (req) => {
 //parse out the token. the token is in the authorization header like this:
