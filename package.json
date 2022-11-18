@@ -25,11 +25,8 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-<<<<<<< HEAD
     "express-openid-connect": "^2.10.0",
-=======
     "express-validator": "^6.14.2",
->>>>>>> 98860110c904a76110e729d1656e9af08fc09781
     "mongoose": "^6.7.2",
     "rest": "^2.0.0",
     "swagger-ui-express": "^4.6.0"
