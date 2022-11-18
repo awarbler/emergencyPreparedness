@@ -9,7 +9,10 @@ const authorizationController = {
       appConfig.clientID
     }&redirect_uri=${encodeURIComponent(
       appConfig.redirectUrl
-    )}&state=1234&scope=openid%20profile%20email`;
+    )}&scope=openid%20profile%20email`;
+    // console.log(authorizationUrl);
+    // console.log(appConfig.authorizationHost);
+
     res.redirect(authorizationUrl);
   },
   callback: async (req, res, next) => {
@@ -17,7 +20,7 @@ const authorizationController = {
       const response = await fetch(`${appConfig.authorizationHost}/oauth/token`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'applicationx-www-form-urlencoded'
+          'Content-Type': 'application/x-www-form-urlencoded'
         },
         body: new URLSearchParams({
           grant_type: 'authorization_code',
