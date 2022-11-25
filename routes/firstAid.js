@@ -10,6 +10,9 @@ const router = express.Router();
 // } = require('../validators/firstAidValidator.js');
 
 const firstAidController = require('../controllers/firstAid');
+const loadUser = require("../middleWare/loadUser");
+
+router.use([loadUser]);
 
 router.get('/', firstAidController.getAllFirstAidItems);
 router.get('/:name', firstAidController.getFirstAidItemByName);

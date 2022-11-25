@@ -3,6 +3,10 @@ const Food = require('../models/food');
 
 const getAllFood = async (req, res) => {
   try {
+    if (!req.user) {
+      return res.status(401).send("Not Authenticated");
+    }
+
     Food.find({})
       .then((data) => {
         res.status(200).send(data);
@@ -19,6 +23,9 @@ const getAllFood = async (req, res) => {
 
 const getFoodByfoodName = async (req, res) => {
     try {
+      if (!req.user) {
+        return res.status(401).send("Not Authenticated");
+      }
 
       const foodName = req.params.foodName;
       
@@ -43,6 +50,10 @@ const getFoodByfoodName = async (req, res) => {
 
   const createNewFoodItem = async (req, res) => {
     try {
+      if (!req.user) {
+        return res.status(401).send("Not Authenticated");
+      }
+
       if (!req.body.foodName || !req.body.brandName || !req.body.quantity || !req.body.purchaseDate || !req.body.expirationDate || !req.body.orderNextByDate || !req.body.description) {
         res.status(400).send({ message: 'Input can not be empty!' });
         return;
@@ -67,6 +78,10 @@ const getFoodByfoodName = async (req, res) => {
   
   const updateFoodItem = async (req, res) => {
     try {
+      if (!req.user) {
+        return res.status(401).send("Not Authenticated");
+      }
+
       const foodName = req.params.foodName;
 
     if (!req.body.foodName || !req.body.brandName || !req.body.quantity || !req.body.purchaseDate || !req.body.expirationDate || !req.body.orderNextByDate || !req.body.description) {
@@ -100,6 +115,10 @@ const getFoodByfoodName = async (req, res) => {
   
   const deleteFoodItem = async (req, res) => {
     try {
+      if (!req.user) {
+        return res.status(401).send("Not Authenticated");
+      }
+      
       const foodName = req.params.foodName;
   
       if (!foodName) {

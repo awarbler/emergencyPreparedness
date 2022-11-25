@@ -11,6 +11,15 @@
     "http",
     "https"
   ],
+  "securityDefinitions": {
+    "Authorization": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "Authentication token (Bearer)",
+      "example": "Bearer <your token>"
+    }
+  },
   "paths": {
     "{cors({origin*}": {
       "options": {
@@ -585,6 +594,35 @@
           }
         }
       }
+    },
+    "/authorization/login": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/authorization/callback": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
-  }
+  },
+  "security": [
+    {
+      "Authorization": []
+    }
+  ]
 }

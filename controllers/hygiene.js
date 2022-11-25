@@ -2,6 +2,10 @@ const Hygiene = require('../models/hygiene');
 
 const getAllHygienes = async (req, res) => {
   try {
+    if (!req.user) {
+      return res.status(401).send("Not Authenticated");
+    }
+
     Hygiene.find({})
       .then((data) => {
         res.status(200).send(data);
@@ -18,6 +22,10 @@ const getAllHygienes = async (req, res) => {
 
 const getHygieneByName = async (req, res) => {
   try {
+    if (!req.user) {
+      return res.status(401).send("Not Authenticated");
+    }
+
     const name = req.params.name;
 
     if (!name) {
@@ -40,6 +48,10 @@ const getHygieneByName = async (req, res) => {
 
 const createNewHygiene = async (req, res) => {
   try {
+    if (!req.user) {
+      return res.status(401).send("Not Authenticated");
+    }
+
     if (!req.body.name || !req.body.quantity || !req.body.hygienePurchaseDate) {
       res.status(400).send({ message: 'Input can not be empty!' });
       return;
@@ -64,6 +76,10 @@ const createNewHygiene = async (req, res) => {
 
 const updateHygiene = async (req, res) => {
   try {
+    if (!req.user) {
+      return res.status(401).send("Not Authenticated");
+    }
+
     const email = req.params.email;
     //   if (!email) {
     //     res.status(400).send({ message: 'Invalid email Supplied' });
@@ -94,6 +110,10 @@ const updateHygiene = async (req, res) => {
 
 const deleteHygiene = async (req, res) => {
   try {
+    if (!req.user) {
+      return res.status(401).send("Not Authenticated");
+    }
+    
     const name = req.params.name;
 
     if (!name) {

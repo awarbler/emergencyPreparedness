@@ -9,6 +9,9 @@ const router = express.Router();
 // } = require('../validators/foodValidator.js');
 
 const foodController = require('../controllers/food');
+const loadUser = require("../middleWare/loadUser");
+
+router.use([loadUser]);
 
 router.get('/', foodController.getAllFood);
 router.get('/:foodName', foodController.getFoodByfoodName);

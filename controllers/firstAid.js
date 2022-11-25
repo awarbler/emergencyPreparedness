@@ -3,6 +3,10 @@ const FirstAid = require('../models/firstAid');
 
 const getAllFirstAidItems = async (req, res) => {
   try {
+    if (!req.user) {
+      return res.status(401).send("Not Authenticated");
+    }
+
     FirstAid.find({})
       .then((data) => {
         res.status(200).send(data);
@@ -19,6 +23,9 @@ const getAllFirstAidItems = async (req, res) => {
 
 const getFirstAidItemByName = async (req, res) => {
     try {
+      if (!req.user) {
+        return res.status(401).send("Not Authenticated");
+      }
 
       const name = req.params.name;
       
@@ -43,6 +50,10 @@ const getFirstAidItemByName = async (req, res) => {
 
   const createNewFirstAidItem = async (req, res) => {
     try {
+      if (!req.user) {
+        return res.status(401).send("Not Authenticated");
+      }
+
       if (!req.body.name || !req.body.quantity || !req.body.purchaseDate) {
         res.status(400).send({ message: 'Input can not be empty!' });
         return;
@@ -67,6 +78,9 @@ const getFirstAidItemByName = async (req, res) => {
   
   const updateFirstAidItem = async (req, res) => {
     try {
+      if (!req.user) {
+        return res.status(401).send("Not Authenticated");
+      }
       const name = req.params.name;
     //   if (!name) {
     //     res.status(400).send({ message: 'Invalid name Supplied' });
@@ -100,6 +114,9 @@ const getFirstAidItemByName = async (req, res) => {
   
   const deleteFirstAidItem = async (req, res) => {
     try {
+      if (!req.user) {
+        return res.status(401).send("Not Authenticated");
+      }
       const name = req.params.name;
   
       if (!name) {
