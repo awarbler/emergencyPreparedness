@@ -1,5 +1,16 @@
 const FirstAid = require('../models/firstAid');
 
+// const getFavFirstAidStorage = async (req, res) => {
+//   try {
+//     if (!req.user) {
+//       return res.status(401).send("Not Authenticated");
+//     }
+
+//     res.json(req.user.favFirstAidStorage);
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// };
 
 const getAllFirstAidItems = async (req, res) => {
   try {

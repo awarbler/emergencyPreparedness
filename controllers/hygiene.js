@@ -38,7 +38,7 @@ const getHygieneByName = async (req, res) => {
       })
       .catch((err) => {
         res.status(500).send({
-          message: err.message || 'Some error occurred while retrieving Hygiene.'
+          message: err.message || 'Some error occurred while retrieving the hygiene item.'
         });
       });
   } catch (err) {
@@ -66,7 +66,7 @@ const createNewHygiene = async (req, res) => {
       })
       .catch((err) => {
         res.status(500).send({
-          message: err.message || 'Some error occurred while creating the user.'
+          message: err.message || 'Some error occurred while creating the hygiene item.'
         });
       });
   } catch (err) {
@@ -80,24 +80,24 @@ const updateHygiene = async (req, res) => {
       return res.status(401).send("Not Authenticated");
     }
 
-    const email = req.params.email;
-    //   if (!email) {
-    //     res.status(400).send({ message: 'Invalid email Supplied' });
-    //     return;
-    //   }
+    const name = req.params.name;
+      
+    if (!name) {
+      res.status(400).send('Must include name.')
+    }
 
     if (!req.body.name || !req.body.quantity || !req.body.hygienePurchaseDate) {
       res.status(400).send({ message: 'Input can not be empty!' });
       return;
     }
 
-    Hygiene.findOne({ name: name }, function (err, user) {
+    Hygiene.findOne({ name: name }, function (err, hygiene) {
       hygiene.name = req.body.name;
       hygiene.quantity = req.body.quantity;
       hygiene.hygienePurchaseDate = req.body.hygienePurchaseDate;
       hygiene.save(function (err) {
         if (err) {
-          res.status(500).json(err || 'Some error occurred while updating the user.');
+          res.status(500).json(err || 'Some error occurred while updating the hygiene item.');
         } else {
           res.status(204).send();
         }
@@ -117,13 +117,13 @@ const deleteHygiene = async (req, res) => {
     const name = req.params.name;
 
     if (!name) {
-      res.status(400).send({ message: 'Email Invalid' });
+      res.status(400).send({ message: 'Name Invalid' });
       return;
     }
 
     Hygiene.deleteOne({ name: name }, (err, result) => {
       if (err) {
-        res.status(500).json(err || 'Some error occurred while deleting the user.');
+        res.status(500).json(err || 'Some error occurred while deleting the hygiene item.');
       } else {
         res.status(200).send(result);
       }

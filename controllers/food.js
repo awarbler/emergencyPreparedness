@@ -39,7 +39,7 @@ const getFoodByfoodName = async (req, res) => {
         })
         .catch((err) => {
           res.status(500).send({
-            message: err.message || 'Some error occurred while retrieving user.'
+            message: err.message || 'Some error occurred while retrieving the food item.'
           });
         });
     } catch (err) {
@@ -128,7 +128,7 @@ const getFoodByfoodName = async (req, res) => {
   
       Food.deleteOne({ foodName: foodName }, (err, result) =>  {
         if (err) {
-          res.status(500).json(err || 'Some error occurred while deleting the user.');
+          res.status(500).json(err || 'Some error occurred while deleting the food item.');
         } else {
           res.status(200).send(result);
         }
