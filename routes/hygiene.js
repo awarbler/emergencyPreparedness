@@ -7,8 +7,8 @@ const router = express.Router();
 //     updateValidator,
 //     destroyValidator
 // } = require('../validators/hygieneValidator.js');
-const hygieneController = require('../controllers/hygiene');
 const loadUser = require("../middleWare/loadUser");
+const hygieneController = require('../controllers/hygiene');
 
 router.use([loadUser]);
 

@@ -8,9 +8,9 @@ const router = express.Router();
 //     updateValidator,
 //     destroyValidator
 // } = require('../validators/firstAidValidator.js');
-
-const firstAidController = require('../controllers/firstAid');
 const loadUser = require("../middleWare/loadUser");
+const firstAidController = require('../controllers/firstAid');
+
 
 router.use([loadUser]);
 
