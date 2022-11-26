@@ -8,11 +8,11 @@ const router = express.Router();
 //     updateValidator,
 //     destroyValidator
 // } = require('../validators/firstAidValidator.js');
-const loadUser = require("../middleWare/loadUser");
+// const loadUser = require('../middleware/loadUser');
 const firstAidController = require('../controllers/firstAid');
 
 
-router.use([loadUser]);
+// router.use([loadUser]);
 
 router.get('/', firstAidController.getAllFirstAidItems);
 router.get('/:name', firstAidController.getFirstAidItemByName);
