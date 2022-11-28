@@ -7,10 +7,10 @@ const router = express.Router();
 //     updateValidator,
 //     destroyValidator
 // } = require('../validators/foodValidator.js');
-// const loadUser = require("../middleWare/loadUser");
+const loadUser = require("../middleWare/loadUser");
 const foodController = require('../controllers/food');
 
-// router.use([loadUser]);
+router.use([loadUser]);
 
 router.get('/', foodController.getAllFood);
 router.get('/:foodName', foodController.getFoodByfoodName);
