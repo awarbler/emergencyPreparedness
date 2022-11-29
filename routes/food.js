@@ -7,7 +7,7 @@ const router = express.Router();
 //     updateValidator,
 //     destroyValidator
 // } = require('../validators/foodValidator.js');
-const loadUser = require("../middleWare/loadUser");
+const loadUser = require('../middleware/loadUser');
 const foodController = require('../controllers/food');
 
 router.use([loadUser]);
