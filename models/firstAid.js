@@ -6,4 +6,6 @@ const firstAidSchema = new Schema({
     purchaseDate: { type: String },
 });
 
-module.exports = model('first-aids', firstAidSchema);
+// module.exports = model('first-aids', firstAidSchema);
+
+module.exports = firstAidSchema;

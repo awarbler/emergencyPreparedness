@@ -6,4 +6,5 @@ const hygieneSchema = new Schema({
   hygienePurchaseDate: { type: String }
 });
 
-module.exports = model('hygiene', hygieneSchema);
+// module.exports = model('hygiene', hygieneSchema);
+module.exports = hygieneSchema;
