@@ -86,12 +86,24 @@ describe('getAllHygienes()', () => {
           await hygieneController.getAllHygienes(req, res);
 
           expect(send).toHaveBeenCalledWith([
+            
             expect.objectContaining({
               hygieneName: 'Dial Soap',
               hygineQuantity: '18',
               hygienPurchaseDate: '11/30/2022'
             })
-          ]);
+          ]
+          mockingoose(Hygiene).toReturn(
+            [
+              {
+                hygieneName: 'Dial Soap',
+                hygineQuantity: '18',
+                hygienPurchaseDate: '11/30/2022'
+              }
+            ],
+            'findOne'
+          );
+          );
         });
       });
     });
