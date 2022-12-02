@@ -70,8 +70,8 @@ describe('getAllHygienes()', () => {
           expect(res.status).toHaveBeenCalledWith(200);
         });
 
-        it('responds with hygiene items', () => {
-          hygieneController.getAllHygienes(req, res);
+        it('responds with hygiene items', async () => {
+          await hygieneController.getAllHygienes(req, res);
 
           expect(send).toHaveBeenCalledWith([
             {
