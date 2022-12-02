@@ -6,7 +6,7 @@ const getAllHygienes = (req, res) => {
       return res.status(401).send('Not Authenticated');
     }
 
-    Hygiene.find({})
+    return Hygiene.find({})
       .then((data) => {
         res.status(200).send(data);
       })
