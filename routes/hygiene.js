@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 // const { body, param } = require('express-validator');
 // const {
@@ -7,15 +7,15 @@ const router = express.Router();
 //     updateValidator,
 //     destroyValidator
 // } = require('../validators/hygieneValidator.js');
-const loadUser = require('../middleware/loadUser');
-const hygieneController = require('../controllers/hygiene');
+const loadUser = require("../middleware/loadUser");
+const hygieneController = require("../controllers/hygiene");
 
 router.use([loadUser]);
 
-router.get('/', hygieneController.getAllHygienes);
-router.get('/:name', hygieneController.getHygieneByName);
-router.post('/', hygieneController.createNewHygiene);
-router.put('/:name', hygieneController.updateHygiene);
-router.delete('/:name', hygieneController.deleteHygiene);
+router.get("/", hygieneController.getAllHygienes);
+router.get("/:name", hygieneController.getHygieneByName);
+router.post("/", hygieneController.createNewHygiene);
+router.put("/:name", hygieneController.updateHygiene);
+router.delete("/:name", hygieneController.deleteHygiene);
 
 module.exports = router;

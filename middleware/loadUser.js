@@ -1,5 +1,5 @@
-const appConfig = require('../config/app');
-const User = require('../models/user');
+const appConfig = require("../config/app");
+const User = require("../models/user");
 
 const loadUser = async (req, res, next) => {
   // do we want to put this in a try ?
@@ -19,14 +19,14 @@ const loadUser = async (req, res, next) => {
 
   // added try and error block
   try {
-  // console.log(req.headers.authorization);
-  if (!req.headers.authorization) next();
+    // console.log(req.headers.authorization);
+    if (!req.headers.authorization) next();
 
-  const authZeroUser = await fetchAuthZeroUser(req.headers.authorization);
+    const authZeroUser = await fetchAuthZeroUser(req.headers.authorization);
 
-  const user = await findOrCreateUser(authZeroUser);
-  req.user = user;
-  next();
+    const user = await findOrCreateUser(authZeroUser);
+    req.user = user;
+    next();
   } catch (_error) {
     next();
   }
@@ -58,8 +58,6 @@ const findOrCreateUser = async (authZeroUserJson) => {
   });
   return newUser;
 };
-
-
 
 // const parseToken = (req) => {
 //parse out the token. the token is in the authorization header like this:

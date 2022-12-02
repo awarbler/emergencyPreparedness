@@ -1,5 +1,5 @@
-const appConfig = require('../config/app');
-const axios = require('axios');
+const appConfig = require("../config/app");
+const axios = require("axios");
 
 const authorizationController = {
   login: (req, res) => {
@@ -7,9 +7,7 @@ const authorizationController = {
       appConfig.authorizationHost
     }/authorize?response_type=code&client_id=${
       appConfig.clientID
-    }&redirect_uri=${encodeURIComponent(
-      appConfig.redirectUrl
-    )}&scope=openid%20profile%20email`;
+    }&redirect_uri=${encodeURIComponent(appConfig.redirectUrl)}&scope=openid%20profile%20email`;
     // console.log(authorizationUrl);
     // console.log(appConfig.authorizationHost);
 
@@ -18,16 +16,16 @@ const authorizationController = {
   callback: async (req, res, next) => {
     try {
       const response = await fetch(`${appConfig.authorizationHost}/oauth/token`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
+          "Content-Type": "application/x-www-form-urlencoded"
         },
         body: new URLSearchParams({
-          grant_type: 'authorization_code',
+          grant_type: "authorization_code",
           client_id: appConfig.clientID,
           client_secret: appConfig.clientSecret,
           redirect_uri: appConfig.redirectUrl,
-          scope: 'openid profile email',
+          scope: "openid profile email",
           code: req.query.code
         })
       });

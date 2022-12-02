@@ -1,11 +1,11 @@
-const express = require('express');
+const express = require("express");
 const app = express();
 
-const appConfig = require('./config/app');
+const appConfig = require("./config/app");
 
-const { initialize } = require('./initializers/db');
+const { initialize } = require("./initializers/db");
 
-const routes = require('./routes');
+const routes = require("./routes");
 
 app.use(routes);
 

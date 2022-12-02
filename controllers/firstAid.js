@@ -1,4 +1,4 @@
-const FirstAid = require('../models/firstAid');
+const FirstAid = require("../models/firstAid");
 
 // const getFavFirstAidStorage = async (req, res) => {
 //   try {
@@ -15,7 +15,7 @@ const FirstAid = require('../models/firstAid');
 const getAllFirstAidItems = (req, res) => {
   try {
     if (!req.user) {
-      return res.status(401).send('Not Authenticated');
+      return res.status(401).send("Not Authenticated");
     }
 
     FirstAid.find({})
@@ -24,7 +24,7 @@ const getAllFirstAidItems = (req, res) => {
       })
       .catch((err) => {
         res.status(500).send({
-          message: err.message || 'Some error occurred while retrieving first-aid items.'
+          message: err.message || "Some error occurred while retrieving first-aid items."
         });
       });
   } catch (err) {
@@ -35,13 +35,13 @@ const getAllFirstAidItems = (req, res) => {
 const getFirstAidItemByName = (req, res) => {
   try {
     if (!req.user) {
-      return res.status(401).send('Not Authenticated');
+      return res.status(401).send("Not Authenticated");
     }
 
     const name = req.params.name;
 
     if (!name) {
-      res.status(400).send('Must include name.');
+      res.status(400).send("Must include name.");
     }
 
     FirstAid.find({ name: name })
@@ -50,7 +50,7 @@ const getFirstAidItemByName = (req, res) => {
       })
       .catch((err) => {
         res.status(500).send({
-          message: err.message || 'Some error occurred while retrieving first-aid item.'
+          message: err.message || "Some error occurred while retrieving first-aid item."
         });
       });
   } catch (err) {
@@ -61,11 +61,11 @@ const getFirstAidItemByName = (req, res) => {
 const createNewFirstAidItem = (req, res) => {
   try {
     if (!req.user) {
-      return res.status(401).send('Not Authenticated');
+      return res.status(401).send("Not Authenticated");
     }
 
     if (!req.body.name || !req.body.quantity || !req.body.purchaseDate) {
-      res.status(400).send({ message: 'Input can not be empty!' });
+      res.status(400).send({ message: "Input can not be empty!" });
       return;
     }
 
@@ -78,7 +78,7 @@ const createNewFirstAidItem = (req, res) => {
       })
       .catch((err) => {
         res.status(500).send({
-          message: err.message || 'Some error occurred while creating the first-aid item.'
+          message: err.message || "Some error occurred while creating the first-aid item."
         });
       });
   } catch (err) {
@@ -89,7 +89,7 @@ const createNewFirstAidItem = (req, res) => {
 const updateFirstAidItem = (req, res) => {
   try {
     if (!req.user) {
-      return res.status(401).send('Not Authenticated');
+      return res.status(401).send("Not Authenticated");
     }
     const name = req.params.name;
     //   if (!name) {
@@ -98,7 +98,7 @@ const updateFirstAidItem = (req, res) => {
     //   }
 
     if (!req.body.name || !req.body.quantity || !req.body.purchaseDate) {
-      res.status(400).send({ message: 'Input can not be empty!' });
+      res.status(400).send({ message: "Input can not be empty!" });
       return;
     }
 
@@ -108,7 +108,7 @@ const updateFirstAidItem = (req, res) => {
       firstAid.purchaseDate = req.body.purchaseDate;
       firstAid.save(function (err) {
         if (err) {
-          res.status(500).json(err || 'Some error occurred while updating the first-aid item.');
+          res.status(500).json(err || "Some error occurred while updating the first-aid item.");
         } else {
           res.status(204).send();
         }
@@ -122,18 +122,18 @@ const updateFirstAidItem = (req, res) => {
 const deleteFirstAidItem = (req, res) => {
   try {
     if (!req.user) {
-      return res.status(401).send('Not Authenticated');
+      return res.status(401).send("Not Authenticated");
     }
     const name = req.params.name;
 
     if (!name) {
-      res.status(400).send({ message: 'Name Invalid' });
+      res.status(400).send({ message: "Name Invalid" });
       return;
     }
 
     FirstAid.deleteOne({ name: name }, (err, result) => {
       if (err) {
-        res.status(500).json(err || 'Some error occurred while deleting the first-aid item.');
+        res.status(500).json(err || "Some error occurred while deleting the first-aid item.");
       } else {
         res.status(200).send(result);
       }

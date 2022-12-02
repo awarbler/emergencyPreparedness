@@ -7,10 +7,7 @@
   },
   "host": "",
   "basePath": "/",
-  "schemes": [
-    "http",
-    "https"
-  ],
+  "schemes": ["http", "https"],
   "securityDefinitions": {
     "Authorization": {
       "type": "apiKey",
