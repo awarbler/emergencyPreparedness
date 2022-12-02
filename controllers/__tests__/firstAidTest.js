@@ -6,12 +6,13 @@ const FirstAid = require("../../models/firstAid");
 let req, res, send;
 
 beforeEach(() => {
-  send = jest.fn();
-
   req = {};
+  send = jest.fn();
   res = {
-    status: jest.fn(() => ({ send })),
-    json: jest.fn()
+    status: jest.fn(() => ({ 
+      send })),
+    json: jest.fn(),
+    // send
   };
 });
 
@@ -151,18 +152,33 @@ describe("getFirstAidItemByName()", () => {
     //     });
 
     describe("when firstAid item exists", () => {
-      beforeEach(() => {
-        data = [
-          {
-            name: "BandAid",
-            quantity: "18",
-            purchaseDate: "11/30/2022"
-          }
-        ];
-        const testing = FirstAid.find({ name: "BandAid" }).then((doc) => {
-          expect(JSON.parse(JSON.stringify(doc))).toMatchObject(data);
-          console.log("====>", testing);
-        });
+        beforeEach(() => {
+            data = [
+                 {
+                name: "BandAid",
+                quantity: "18",
+                purchaseDate: "11/30/2022"
+              }
+            ];
+            // const testing = FirstAid.find({ name: "BandAid" }).then((doc) => {
+            //   expect(JSON.parse(JSON.stringify(doc))).toMatchObject(data);
+            //   console.log("====>", testing);
+            // });
+            mockingoose(FirstAid).toReturn(data, "find");
+          });
+
+    //   beforeEach(() => {
+    //     data = [
+    //       {
+    //         name: "BandAid",
+    //         quantity: "18",
+    //         purchaseDate: "11/30/2022"
+    //       }
+    //     ];
+    //     const testing = FirstAid.find({ name: "BandAid" }).then((doc) => {
+    //       expect(JSON.parse(JSON.stringify(doc))).toMatchObject(data);
+    //       console.log("====>", testing);
+    //     });
         // mockingoose(FirstAid).toReturn([
         //     {
         //         name: "BandAid",
@@ -170,7 +186,7 @@ describe("getFirstAidItemByName()", () => {
         //         purchaseDate: "11/30/2022",
         //     },
         // ], 'find');
-      });
+    //   });
 
       it("responds with firstAid item", () => {
         data = [
@@ -182,17 +198,21 @@ describe("getFirstAidItemByName()", () => {
         ];
         return FirstAid.find({ name: "BandAid" }).then((doc) => {
           expect(JSON.parse(JSON.stringify(doc))).toMatchObject(data);
+        //   console.log("=====>", testing)
+          console.log("====>doc", doc)
+          console.log("====>data", data)
+
         });
       });
 
-      it("responds with 200", async () => {
-        await firstAidController.getFirstAidItemByName(req, res);
+    //   it("responds with 200", async () => {
+    //     await firstAidController.getFirstAidItemByName(req, res);
 
-        expect(res.status).toHaveBeenCalledWith(200);
-      });
+    //     expect(res.status).toHaveBeenCalledWith(200);
+    //   });
 
-      it("responds with firstAid item", async () => {
-        await firstAidController.getFirstAidItemByName(req, res);
+      it("responds with firstAid item", () => {
+        firstAidController.getFirstAidItemByName(req, res);
 
         expect(send).toHaveBeenCalledWith([
           expect.objectContaining({

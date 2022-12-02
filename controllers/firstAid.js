@@ -20,6 +20,7 @@ const getAllFirstAidItems = (req, res) => {
 
     FirstAid.find({})
       .then((data) => {
+        console.log(data)
         res.status(200).send(data);
       })
       .catch((err) => {
@@ -46,7 +47,9 @@ const getFirstAidItemByName = (req, res) => {
 
     FirstAid.find({ name: name })
       .then((data) => {
+        console.log("Get by name", data)
         res.status(200).send(data[0]);
+        console.log("Get by name", data)
       })
       .catch((err) => {
         res.status(500).send({
