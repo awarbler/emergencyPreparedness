@@ -4,7 +4,7 @@
   "description": "An application to track emergency preparedness items.",
   "main": "app.js",
   "scripts": {
-    "test": "jest .",
+    "test": "jest",
     "start": "node app.js",
     "watch": "nodemon app.js",
     "lint": "eslint .",
@@ -17,6 +17,7 @@
   "devDependencies": {
     "eslint": "^8.28.0",
     "jest": "^29.3.1",
+    "mockingoose": "^2.16.2",
     "nodemon": "^2.0.20",
     "prettier": "2.7.1",
     "swagger-autogen": "^2.22.0"
