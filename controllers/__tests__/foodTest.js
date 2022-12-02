@@ -1,9 +1,7 @@
 const foodController = require("../food");
 const mongoose = require("mongoose");
 
-
 let req, res, send;
-
 
 beforeEach(() => {
     send = jest.fn();
@@ -13,8 +11,6 @@ beforeEach(() => {
         json: jest.fn(),
     };
 });
-
-
 
 describe("getAllFood()", () => {
     describe("when there is no user", () => {
@@ -40,7 +36,54 @@ describe("getAllFood()", () => {
             };
         });
 
-    })
+        describe("when food array is empty", () => {
+            beforeEach(() => {
+                data = [];
+            });
 
+            it("responds with 200", () =>{
+                foodController.getAllFood(req,res);
 
+                expect(res.status).toHaveBeenCalledWith([]);
+            });
+            describe("when food items exists", () => {
+                beforeEach(() => {
+                    data = [
+                        {
+                            foodName: "pasta",
+                            brandName: "Great Value",
+                            quanitity: "10",
+                            purchaseDate: "12/25/2000",
+                            expirationDate: "12/25/2010",
+                            orderNextByDate: "12/25/2009",
+                            description: "It is pasta",
+
+                        }
+                        
+                    ];
+                });
+
+                it("responds with 200", () => {
+                    foodController.getAllFood(req,res);
+                    expect(res.status).toHaveBeenCalledWith(200);
+                });
+
+                it("responds with food items", () => {
+                    foodController.getAllFood(req,res);
+
+                    expect(send).toHaveBeenCalledWith([
+                        {
+                            foodName: "pasta",
+                            brandName: "Great Value",
+                            quanitity: "10",
+                            purchaseDate: "12/25/2000",
+                            expirationDate: "12/25/2010",
+                            orderNextByDate: "12/25/2009",
+                            description: "It is pasta",
+                        }
+                    ]);
+                });
+            });
+        });
+    });
 });
