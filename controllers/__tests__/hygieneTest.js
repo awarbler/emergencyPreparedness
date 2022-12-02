@@ -88,7 +88,7 @@ describe("getAllHygienes()", () => {
         it("responds with hygiene items", async () => {
           await hygieneController.getAllHygienes(req, res);
 
-          console.log("2. Doing the assertion with 'expect");
+          // console.log("2. Doing the assertion with 'expect");
           expect(send).toHaveBeenCalledWith([expect.objectContaining({})]);
         });
       });
