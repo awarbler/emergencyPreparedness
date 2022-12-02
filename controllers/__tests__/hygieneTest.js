@@ -1,5 +1,7 @@
 const hygieneController = require('../hygiene');
 const mongoose = require('mongoose');
+const mockingoose = require('mockingoose');
+const Hygiene = require('../../models/hygiene');
 
 let req, res, send;
 
@@ -62,6 +64,16 @@ describe('getAllHygienes()', () => {
               hygienPurchaseDate: '11/30/2022'
             }
           ];
+          mockingoose(Hygiene).toReturn(
+            [
+              {
+                hygieneName: 'Dial Soap',
+                hygineQuantity: '18',
+                hygienPurchaseDate: '11/30/2022'
+              }
+            ],
+            'findOne'
+          );
         });
 
         it('responds with 200', () => {
@@ -74,11 +86,11 @@ describe('getAllHygienes()', () => {
           await hygieneController.getAllHygienes(req, res);
 
           expect(send).toHaveBeenCalledWith([
-            {
+            expect.objectContaining({
               hygieneName: 'Dial Soap',
               hygineQuantity: '18',
               hygienPurchaseDate: '11/30/2022'
-            }
+            })
           ]);
         });
       });
