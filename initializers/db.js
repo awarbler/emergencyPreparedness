@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const dbConfig = require('../config/db');
+const mongoose = require("mongoose");
+const dbConfig = require("../config/db");
 
 const database = {
   initialize: async () => {
@@ -9,7 +9,7 @@ const database = {
       console.error(err);
       return false;
     }
-    console.log('Connected to the Database');
+    console.log("Connected to the Database");
     return true;
   }
 };

@@ -1,18 +1,20 @@
-const Hygiene = require('../models/hygiene');
+const Hygiene = require("../models/hygiene");
 
 const getAllHygienes = (req, res) => {
   try {
     if (!req.user) {
-      return res.status(401).send('Not Authenticated');
+      return res.status(401).send("Not Authenticated");
     }
 
     return Hygiene.find({})
       .then((data) => {
+        console.log("======>", data);
+        console.log("1.Calling 'send'");
         res.status(200).send(data);
       })
       .catch((err) => {
         res.status(500).send({
-          message: err.message || 'Some error occurred while retrieving Hygienes.'
+          message: err.message || "Some error occurred while retrieving Hygienes."
         });
       });
   } catch (err) {
@@ -23,13 +25,13 @@ const getAllHygienes = (req, res) => {
 const getHygieneByName = (req, res) => {
   try {
     if (!req.user) {
-      return res.status(401).send('Not Authenticated');
+      return res.status(401).send("Not Authenticated");
     }
 
     const name = req.params.name;
 
     if (!name) {
-      res.status(400).send('Must include email.');
+      res.status(400).send("Must include email.");
     }
 
     Hygiene.find({ name: name })
@@ -38,7 +40,7 @@ const getHygieneByName = (req, res) => {
       })
       .catch((err) => {
         res.status(500).send({
-          message: err.message || 'Some error occurred while retrieving the hygiene item.'
+          message: err.message || "Some error occurred while retrieving the hygiene item."
         });
       });
   } catch (err) {
@@ -49,11 +51,11 @@ const getHygieneByName = (req, res) => {
 const createNewHygiene = (req, res) => {
   try {
     if (!req.user) {
-      return res.status(401).send('Not Authenticated');
+      return res.status(401).send("Not Authenticated");
     }
 
-    if (!req.body.name || !req.body.quantity || !req.body.hygienePurchaseDate) {
-      res.status(400).send({ message: 'Input can not be empty!' });
+    if (!req.body.name || !req.body.quantity || !req.body.purchaseDate) {
+      res.status(400).send({ message: "Input can not be empty!" });
       return;
     }
 
@@ -66,7 +68,7 @@ const createNewHygiene = (req, res) => {
       })
       .catch((err) => {
         res.status(500).send({
-          message: err.message || 'Some error occurred while creating the hygiene item.'
+          message: err.message || "Some error occurred while creating the hygiene item."
         });
       });
   } catch (err) {
@@ -77,27 +79,27 @@ const createNewHygiene = (req, res) => {
 const updateHygiene = (req, res) => {
   try {
     if (!req.user) {
-      return res.status(401).send('Not Authenticated');
+      return res.status(401).send("Not Authenticated");
     }
 
     const name = req.params.name;
 
     if (!name) {
-      res.status(400).send('Must include name.');
+      res.status(400).send("Must include name.");
     }
 
-    if (!req.body.name || !req.body.quantity || !req.body.hygienePurchaseDate) {
-      res.status(400).send({ message: 'Input can not be empty!' });
+    if (!req.body.name || !req.body.quantity || !req.body.purchaseDate) {
+      res.status(400).send({ message: "Input can not be empty!" });
       return;
     }
 
     Hygiene.findOne({ name: name }, function (err, hygiene) {
       hygiene.name = req.body.name;
       hygiene.quantity = req.body.quantity;
-      hygiene.hygienePurchaseDate = req.body.hygienePurchaseDate;
+      hygiene.purchaseDate = req.body.purchaseDate;
       hygiene.save(function (err) {
         if (err) {
-          res.status(500).json(err || 'Some error occurred while updating the hygiene item.');
+          res.status(500).json(err || "Some error occurred while updating the hygiene item.");
         } else {
           res.status(204).send();
         }
@@ -111,19 +113,19 @@ const updateHygiene = (req, res) => {
 const deleteHygiene = (req, res) => {
   try {
     if (!req.user) {
-      return res.status(401).send('Not Authenticated');
+      return res.status(401).send("Not Authenticated");
     }
 
     const name = req.params.name;
 
     if (!name) {
-      res.status(400).send({ message: 'Name Invalid' });
+      res.status(400).send({ message: "Name Invalid" });
       return;
     }
 
     Hygiene.deleteOne({ name: name }, (err, result) => {
       if (err) {
-        res.status(500).json(err || 'Some error occurred while deleting the hygiene item.');
+        res.status(500).json(err || "Some error occurred while deleting the hygiene item.");
       } else {
         res.status(200).send(result);
       }

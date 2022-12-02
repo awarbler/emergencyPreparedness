@@ -1,7 +1,7 @@
-const cors = require('cors');
+const cors = require("cors");
 
 var corsOptions = {
-  origin: '*'
+  origin: "*"
 };
 
 module.exports = cors(corsOptions);

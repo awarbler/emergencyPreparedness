@@ -1,18 +1,18 @@
-const Food = require('../models/food');
+const Food = require("../models/food");
 
 const getAllFood = (req, res) => {
   try {
     if (!req.user) {
-      return res.status(401).send('Not Authenticated');
+      return res.status(401).send("Not Authenticated");
     }
 
-    Food.find({})
+    return Food.find({})
       .then((data) => {
         res.status(200).send(data);
       })
       .catch((err) => {
         res.status(500).send({
-          message: err.message || 'Some error occurred while retrieving the food items.'
+          message: err.message || "Some error occurred while retrieving the food items."
         });
       });
   } catch (err) {
@@ -23,13 +23,13 @@ const getAllFood = (req, res) => {
 const getFoodByfoodName = (req, res) => {
   try {
     if (!req.user) {
-      return res.status(401).send('Not Authenticated');
+      return res.status(401).send("Not Authenticated");
     }
 
     const foodName = req.params.foodName;
 
     if (!foodName) {
-      res.status(400).send('Must include the name of the food.');
+      res.status(400).send("Must include the name of the food.");
     }
 
     Food.find({ foodName: foodName })
@@ -38,7 +38,7 @@ const getFoodByfoodName = (req, res) => {
       })
       .catch((err) => {
         res.status(500).send({
-          message: err.message || 'Some error occurred while retrieving the food item.'
+          message: err.message || "Some error occurred while retrieving the food item."
         });
       });
   } catch (err) {
@@ -49,7 +49,7 @@ const getFoodByfoodName = (req, res) => {
 const createNewFoodItem = (req, res) => {
   try {
     if (!req.user) {
-      return res.status(401).send('Not Authenticated');
+      return res.status(401).send("Not Authenticated");
     }
 
     if (
@@ -61,7 +61,7 @@ const createNewFoodItem = (req, res) => {
       !req.body.orderNextByDate ||
       !req.body.description
     ) {
-      res.status(400).send({ message: 'Input can not be empty!' });
+      res.status(400).send({ message: "Input can not be empty!" });
       return;
     }
 
@@ -74,7 +74,7 @@ const createNewFoodItem = (req, res) => {
       })
       .catch((err) => {
         res.status(500).send({
-          message: err.message || 'Some error occurred while creating the food item.'
+          message: err.message || "Some error occurred while creating the food item."
         });
       });
   } catch (err) {
@@ -85,7 +85,7 @@ const createNewFoodItem = (req, res) => {
 const updateFoodItem = (req, res) => {
   try {
     if (!req.user) {
-      return res.status(401).send('Not Authenticated');
+      return res.status(401).send("Not Authenticated");
     }
 
     const foodName = req.params.foodName;
@@ -99,7 +99,7 @@ const updateFoodItem = (req, res) => {
       !req.body.orderNextByDate ||
       !req.body.description
     ) {
-      res.status(400).send({ message: 'Input can not be empty!' });
+      res.status(400).send({ message: "Input can not be empty!" });
       return;
     }
 
@@ -113,7 +113,7 @@ const updateFoodItem = (req, res) => {
       food.description = req.body.description;
       food.save(function (err) {
         if (err) {
-          res.status(500).json(err || 'Some error occurred while updating the food item.');
+          res.status(500).json(err || "Some error occurred while updating the food item.");
         } else {
           res.status(204).send();
         }
@@ -127,19 +127,19 @@ const updateFoodItem = (req, res) => {
 const deleteFoodItem = (req, res) => {
   try {
     if (!req.user) {
-      return res.status(401).send('Not Authenticated');
+      return res.status(401).send("Not Authenticated");
     }
 
     const foodName = req.params.foodName;
 
     if (!foodName) {
-      res.status(400).send({ message: 'Cannot Find food item' });
+      res.status(400).send({ message: "Cannot Find food item" });
       return;
     }
 
     Food.deleteOne({ foodName: foodName }, (err, result) => {
       if (err) {
-        res.status(500).json(err || 'Some error occurred while deleting the food item.');
+        res.status(500).json(err || "Some error occurred while deleting the food item.");
       } else {
         res.status(200).send(result);
       }

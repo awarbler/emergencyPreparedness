@@ -1,7 +1,6 @@
-const firstAidController = require('../firstAid');
-const mockingoose = require('mockingoose');
-const mockingoose = require('mockingoose');
-const FirstAid = require('../../models/firstAid');
+const firstAidController = require("../firstAid");
+const mockingoose = require("mockingoose");
+const FirstAid = require("../../models/firstAid");
 
 let req, res, send;
 
@@ -16,11 +15,11 @@ beforeEach(() => {
 });
 
 ///// getAllFirstAidItems() /////
-describe('getAllFirstAidItems()', () => {
-  describe('when there is no user present', () => {
+describe("getAllFirstAidItems()", () => {
+  describe("when there is no user present", () => {
     beforeEach(() => (req.user = undefined));
 
-    it('responds with 401', () => {
+    it("responds with 401", () => {
       firstAidController.getAllFirstAidItems(req, res);
 
       expect(res.status).toHaveBeenCalledWith(401);
@@ -29,35 +28,35 @@ describe('getAllFirstAidItems()', () => {
     it("responds with 'Not Authenticated'", () => {
       firstAidController.getAllFirstAidItems(req, res);
 
-      expect(send).toHaveBeenCalledWith('Not Authenticated');
+      expect(send).toHaveBeenCalledWith("Not Authenticated");
     });
   });
-  describe('when there is a user present', () => {
+  describe("when there is a user present", () => {
     beforeEach(() => {
       req.user = {
-        identifier: 'testUser'
+        identifier: "testUser"
       };
     });
 
-    describe('when firstAid array is empty', () => {
+    describe("when firstAid array is empty", () => {
       beforeEach(() => {
         // data = [];
-        mockingoose(FirstAid).toReturn([], 'find');
+        mockingoose(FirstAid).toReturn([], "find");
       });
 
-      it('responds with 200', async () => {
+      it("responds with 200", async () => {
         await firstAidController.getAllFirstAidItems(req, res);
 
         expect(res.status).toHaveBeenCalledWith(200);
       });
 
-      it('responds with an empty array', async () => {
+      it("responds with an empty array", async () => {
         await firstAidController.getAllFirstAidItems(req, res);
 
         expect(send).toHaveBeenCalledWith([]);
       });
 
-      describe('when firstAid items exist', () => {
+      describe("when firstAid items exist", () => {
         beforeEach(() => {
           // data = [
           //     {
@@ -70,29 +69,29 @@ describe('getAllFirstAidItems()', () => {
           mockingoose(FirstAid).toReturn(
             [
               {
-                name: 'BandAid',
-                quantity: '18',
-                purchaseDate: '11/30/2022'
+                name: "BandAid",
+                quantity: "18",
+                purchaseDate: "11/30/2022"
               }
             ],
-            'find'
+            "find"
           );
         });
 
-        it('responds with 200', async () => {
+        it("responds with 200", async () => {
           await firstAidController.getAllFirstAidItems(req, res);
 
           expect(res.status).toHaveBeenCalledWith(200);
         });
 
-        it('responds with firstAid items', async () => {
+        it("responds with firstAid items", async () => {
           await firstAidController.getAllFirstAidItems(req, res);
 
           expect(send).toHaveBeenCalledWith([
             expect.objectContaining({
-              name: 'BandAid',
-              quantity: '18',
-              purchaseDate: '11/30/2022'
+              name: "BandAid",
+              quantity: "18",
+              purchaseDate: "11/30/2022"
             })
           ]);
         });
@@ -102,11 +101,11 @@ describe('getAllFirstAidItems()', () => {
 });
 
 ///// getFirstAidItemByName /////
-describe('getFirstAidItemByName()', () => {
-  describe('when there is no user present', () => {
+describe("getFirstAidItemByName()", () => {
+  describe("when there is no user present", () => {
     beforeEach(() => ((req.user = undefined), (req.name = undefined)));
 
-    it('responds with 401', () => {
+    it("responds with 401", () => {
       firstAidController.getFirstAidItemByName(req, res);
 
       expect(res.status).toHaveBeenCalledWith(401);
@@ -115,13 +114,13 @@ describe('getFirstAidItemByName()', () => {
     it("responds with 'Not Authenticated'", () => {
       firstAidController.getFirstAidItemByName(req, res);
 
-      expect(send).toHaveBeenCalledWith('Not Authenticated');
+      expect(send).toHaveBeenCalledWith("Not Authenticated");
     });
   });
-  describe('when there is a user present', () => {
+  describe("when there is a user present", () => {
     beforeEach(() => {
       req.user = {
-        identifier: 'testUser'
+        identifier: "testUser"
       };
     });
 
@@ -150,18 +149,18 @@ describe('getFirstAidItemByName()', () => {
     //         expect(send).toHaveBeenCalledWith([]);
     //     });
 
-    describe('when firstAid item exists', () => {
+    describe("when firstAid item exists", () => {
       beforeEach(() => {
         data = [
           {
-            name: 'BandAid',
-            quantity: '18',
-            purchaseDate: '11/30/2022'
+            name: "BandAid",
+            quantity: "18",
+            purchaseDate: "11/30/2022"
           }
         ];
-        const testing = FirstAid.find({ name: 'BandAid' }).then((doc) => {
+        const testing = FirstAid.find({ name: "BandAid" }).then((doc) => {
           expect(JSON.parse(JSON.stringify(doc))).toMatchObject(data);
-          console.log('====>', testing);
+          console.log("====>", testing);
         });
         // mockingoose(FirstAid).toReturn([
         //     {
@@ -172,33 +171,33 @@ describe('getFirstAidItemByName()', () => {
         // ], 'find');
       });
 
-      it('responds with firstAid item', () => {
+      it("responds with firstAid item", () => {
         data = [
           {
-            name: 'BandAid',
-            quantity: '18',
-            purchaseDate: '11/30/2022'
+            name: "BandAid",
+            quantity: "18",
+            purchaseDate: "11/30/2022"
           }
         ];
-        return FirstAid.find({ name: 'BandAid' }).then((doc) => {
+        return FirstAid.find({ name: "BandAid" }).then((doc) => {
           expect(JSON.parse(JSON.stringify(doc))).toMatchObject(data);
         });
       });
 
-      it('responds with 200', async () => {
+      it("responds with 200", async () => {
         await firstAidController.getFirstAidItemByName(req, res);
 
         expect(res.status).toHaveBeenCalledWith(200);
       });
 
-      it('responds with firstAid item', async () => {
+      it("responds with firstAid item", async () => {
         await firstAidController.getFirstAidItemByName(req, res);
 
         expect(send).toHaveBeenCalledWith([
           expect.objectContaining({
-            name: 'BandAid',
-            quantity: '18',
-            purchaseDate: '11/30/2022'
+            name: "BandAid",
+            quantity: "18",
+            purchaseDate: "11/30/2022"
           })
         ]);
       });
