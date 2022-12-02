@@ -1,4 +1,4 @@
-const hygieneController = require('../firstAid');
+const hygieneController = require('../hygiene');
 const mongoose = require('mongoose');
 
 let req, res, send;
@@ -36,7 +36,7 @@ describe('getAllHygienes()', () => {
       };
     });
 
-    describe('when firstAid array is empty', () => {
+    describe('when hygiene array is empty', () => {
       beforeEach(() => {
         data = [];
       });
@@ -53,7 +53,7 @@ describe('getAllHygienes()', () => {
         expect(send).toHaveBeenCalledWith([]);
       });
 
-      describe('when firstAid items exist', () => {
+      describe('when hygiene items exist', () => {
         beforeEach(() => {
           data = [
             {
@@ -70,7 +70,7 @@ describe('getAllHygienes()', () => {
           expect(res.status).toHaveBeenCalledWith(200);
         });
 
-        it('responds with firstAid items', () => {
+        it('responds with hygiene items', () => {
           hygieneController.getAllHygienes(req, res);
 
           expect(send).toHaveBeenCalledWith([
