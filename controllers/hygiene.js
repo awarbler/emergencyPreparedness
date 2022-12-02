@@ -1,9 +1,9 @@
 const Hygiene = require('../models/hygiene');
 
-const getAllHygienes = async (req, res) => {
+const getAllHygienes = (req, res) => {
   try {
     if (!req.user) {
-      return res.status(401).send("Not Authenticated");
+      return res.status(401).send('Not Authenticated');
     }
 
     Hygiene.find({})
@@ -20,10 +20,10 @@ const getAllHygienes = async (req, res) => {
   }
 };
 
-const getHygieneByName = async (req, res) => {
+const getHygieneByName = (req, res) => {
   try {
     if (!req.user) {
-      return res.status(401).send("Not Authenticated");
+      return res.status(401).send('Not Authenticated');
     }
 
     const name = req.params.name;
@@ -46,10 +46,10 @@ const getHygieneByName = async (req, res) => {
   }
 };
 
-const createNewHygiene = async (req, res) => {
+const createNewHygiene = (req, res) => {
   try {
     if (!req.user) {
-      return res.status(401).send("Not Authenticated");
+      return res.status(401).send('Not Authenticated');
     }
 
     if (!req.body.name || !req.body.quantity || !req.body.hygienePurchaseDate) {
@@ -74,16 +74,16 @@ const createNewHygiene = async (req, res) => {
   }
 };
 
-const updateHygiene = async (req, res) => {
+const updateHygiene = (req, res) => {
   try {
     if (!req.user) {
-      return res.status(401).send("Not Authenticated");
+      return res.status(401).send('Not Authenticated');
     }
 
     const name = req.params.name;
-      
+
     if (!name) {
-      res.status(400).send('Must include name.')
+      res.status(400).send('Must include name.');
     }
 
     if (!req.body.name || !req.body.quantity || !req.body.hygienePurchaseDate) {
@@ -108,12 +108,12 @@ const updateHygiene = async (req, res) => {
   }
 };
 
-const deleteHygiene = async (req, res) => {
+const deleteHygiene = (req, res) => {
   try {
     if (!req.user) {
-      return res.status(401).send("Not Authenticated");
+      return res.status(401).send('Not Authenticated');
     }
-    
+
     const name = req.params.name;
 
     if (!name) {
