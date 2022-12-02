@@ -26,10 +26,21 @@ describe("getAllFood()", () => {
             expect(res.status).toHaveBeenCalledWith(401);
         });
 
-        it("resonds with 'Not Authenticated'",() => {
+        it("responds with 'Not Authenticated'",() => {
             foodController.index(req,res);
 
             expect(send).toHaveBeenCalledWith("Not Authenticated");
         });
     });
+
+    describe("when there is a user present",() => {
+        beforeEach(() => {
+            req.user = {
+                identifer: "testUser",
+            };
+        });
+
+    })
+
+
 });
