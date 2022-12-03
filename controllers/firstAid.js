@@ -1,5 +1,5 @@
 const FirstAid = require("../models/firstAid");
-
+const mongoose = require("mongoose");
 // const getFavFirstAidStorage = async (req, res) => {
 //   try {
 //     if (!req.user) {
@@ -67,10 +67,10 @@ const createNewFirstAidItem = (req, res) => {
       return res.status(401).send("Not Authenticated");
     }
 
-    if (!req.body.name || !req.body.quantity || !req.body.purchaseDate) {
-      res.status(400).send({ message: "Input can not be empty!" });
-      return;
-    }
+    // if (!req.body.name || !req.body.quantity || !req.body.purchaseDate) {
+    //   res.status(400).send({ message: "Input can not be empty!" });
+    //   return;
+    // }
 
     const firstAid = new FirstAid(req.body);
     return firstAid
@@ -80,9 +80,14 @@ const createNewFirstAidItem = (req, res) => {
         res.status(201).send(data);
       })
       .catch((err) => {
-        res.status(500).send({
-          message: err.message || "Some error occurred while creating the first-aid item."
-        });
+        if (err instanceof mongoose.Error.ValidationError) {
+          res.status(422).send({ message: err.message || "Input can not be empty!" });
+        }
+        else { 
+            res.status(500).send({
+            message: err.message || "Some error occurred while creating the first-aid item."
+          });
+        }
       });
   } catch (err) {
     res.status(500).json(err);
@@ -102,21 +107,25 @@ const updateFirstAidItem = (req, res) => {
         return;
       }
 
-    if (!req.body.name || !req.body.quantity || !req.body.purchaseDate) {
-      res.status(400).send({ message: "Input can not be empty!" });
-      return;
-    }
+    // if (!req.body.name || !req.body.quantity || !req.body.purchaseDate) {
+    //   res.status(400).send({ message: "Input can not be empty!" });
+    //   return;
+    // }
 
     return FirstAid.findOne({ name: name }, function (err, firstAid) {
       firstAid.name = req.body.name;
       firstAid.quantity = req.body.quantity;
       firstAid.purchaseDate = req.body.purchaseDate;
       firstAid.save(function (err) {
-        if (err) {
+        if (err instanceof mongoose.Error.ValidationError) {
+          res.status(422).send({ message: err.message || "Input can not be empty!" });
+        } 
+        else if (err) {
           res.status(500).json(err || "Some error occurred while updating the first-aid item.");
-        } else {
+        } 
+        else {
           res.status(204).send();
-          console.log(res.status(204).send())
+          // console.log(res.status(204).send())
         }
       });
     });
