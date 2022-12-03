@@ -126,33 +126,11 @@ describe("getFirstAidItemByName()", () => {
       };
     });
 
-    // describe("when firstAid item by name is empty", () => {
-    //     beforeEach(() => {
-    //         data = [];
-    //         req.name = {
-    //             name: "BandAid",
-    //         };
-    //         mockingoose(FirstAid).toReturn([], 'find');
 
-    //         return FirstAid.find({ name: 'BandAid' }).then(doc => {
-    //             expect(JSON.parse(JSON.stringify(doc))).toMatchObject(data);
-    //         });
-    //     });
-
-    //     it("responds with 200", async () => {
-    //         await firstAidController.getFirstAidItemByName(req, res);
-
-    //         expect(res.status).toHaveBeenCalledWith(200);
-    //     });
-
-    //     it("responds with an empty firstAid item", async () => {
-    //         await firstAidController.getFirstAidItemByName(req, res);
-
-    //         expect(send).toHaveBeenCalledWith([]);
-    //     });
-
-    describe("when firstAid item exists", () => {
+    describe("when firstAid item by name exists", () => {
         beforeEach(() => {
+            req.params = { name: "BandAid" }
+
             data = [
                  {
                 name: "BandAid",
@@ -160,69 +138,212 @@ describe("getFirstAidItemByName()", () => {
                 purchaseDate: "11/30/2022"
               }
             ];
-            // const testing = FirstAid.find({ name: "BandAid" }).then((doc) => {
-            //   expect(JSON.parse(JSON.stringify(doc))).toMatchObject(data);
-            //   console.log("====>", testing);
-            // });
-            mockingoose(FirstAid).toReturn(data, "find");
+
+            const finderMock = query => {          
+                if (query.getQuery().name === "BandAid") {
+                  return data;
+                }
+                return [];
+              }; 
+            mockingoose(FirstAid).toReturn(finderMock, "find");
           });
 
-    //   beforeEach(() => {
-    //     data = [
-    //       {
-    //         name: "BandAid",
-    //         quantity: "18",
-    //         purchaseDate: "11/30/2022"
-    //       }
-    //     ];
-    //     const testing = FirstAid.find({ name: "BandAid" }).then((doc) => {
-    //       expect(JSON.parse(JSON.stringify(doc))).toMatchObject(data);
-    //       console.log("====>", testing);
-    //     });
-        // mockingoose(FirstAid).toReturn([
-        //     {
-        //         name: "BandAid",
-        //         quantity: "18",
-        //         purchaseDate: "11/30/2022",
-        //     },
-        // ], 'find');
-    //   });
+      it("responds with 200", async () => {
+        await firstAidController.getFirstAidItemByName(req, res);
 
-      it("responds with firstAid item", () => {
-        data = [
-          {
-            name: "BandAid",
-            quantity: "18",
-            purchaseDate: "11/30/2022"
-          }
-        ];
-        return FirstAid.find({ name: "BandAid" }).then((doc) => {
-          expect(JSON.parse(JSON.stringify(doc))).toMatchObject(data);
-        //   console.log("=====>", testing)
-          console.log("====>doc", doc)
-          console.log("====>data", data)
-
-        });
+        expect(res.status).toHaveBeenCalledWith(200);
       });
 
-    //   it("responds with 200", async () => {
-    //     await firstAidController.getFirstAidItemByName(req, res);
+      it("responds with firstAid item matching the name parameter", async () => {
+        await firstAidController.getFirstAidItemByName(req, res);
 
-    //     expect(res.status).toHaveBeenCalledWith(200);
-    //   });
-
-      it("responds with firstAid item", () => {
-        firstAidController.getFirstAidItemByName(req, res);
-
-        expect(send).toHaveBeenCalledWith([
-          expect.objectContaining({
-            name: "BandAid",
-            quantity: "18",
-            purchaseDate: "11/30/2022"
-          })
-        ]);
+        expect(send).toHaveBeenCalledWith(expect.objectContaining(data[0]));
       });
     });
   });
 });
 // });
+
+
+///// createNewFirstAidItem() /////
+describe("createNewFirstAidItem()", () => {
+    describe("when there is no user present", () => {
+      beforeEach(() => (req.user = undefined));
+  
+      it("responds with 401", () => {
+        firstAidController.createNewFirstAidItem(req, res);
+  
+        expect(res.status).toHaveBeenCalledWith(401);
+      });
+  
+      it("responds with 'Not Authenticated'", () => {
+        firstAidController.createNewFirstAidItem(req, res);
+  
+        expect(send).toHaveBeenCalledWith("Not Authenticated");
+      });
+    });
+    describe("when there is a user present", () => {
+      beforeEach(() => {
+        req.user = {
+          identifier: "testUser",
+        
+        //   save: jest.fn(async () => true),
+        };
+      });
+  
+      describe("when user creates a firstAid post and is valid", () => {
+        beforeEach(() => {
+            req.body = {
+                name: "BandAids",
+                quantity: "20",
+                purchaseDate: "12/2/2022"
+              };
+              mockingoose(FirstAid).toReturn(req.body, "save");
+        });
+  
+        it("responds with 201", async () => {
+          await firstAidController.createNewFirstAidItem(req, res);
+  
+          expect(res.status).toHaveBeenCalledWith(201);
+        });
+
+        it("responds with firstAid post", async () => {
+          await firstAidController.createNewFirstAidItem(req, res);
+  
+          expect(send).toHaveBeenCalledWith(expect.objectContaining(req.body));
+        });
+      });
+    });
+  });
+  
+
+
+///// updateFirstAidItem /////
+describe("updateFirstAidItem()", () => {
+    describe("when there is no user present", () => {
+      beforeEach(() => ((req.user = undefined)));
+  
+      it("responds with 401", () => {
+        firstAidController.updateFirstAidItem(req, res);
+  
+        expect(res.status).toHaveBeenCalledWith(401);
+      });
+  
+      it("responds with 'Not Authenticated'", () => {
+        firstAidController.updateFirstAidItem(req, res);
+  
+        expect(send).toHaveBeenCalledWith("Not Authenticated");
+      });
+    });
+    describe("when there is a user present", () => {
+      beforeEach(() => {
+        req.user = {
+          identifier: "testUser"
+        };
+      });
+  
+      describe("when firstAid item exists", () => {
+          beforeEach(() => {
+              req.params = { name: "BandAid" }
+  
+              data = [
+                   {
+                  name: "BandAid",
+                  quantity: "18",
+                  purchaseDate: "11/30/2022"
+                }
+              ];
+
+              req.body = [
+                {
+               name: "Band-aid",
+               quantity: "22",
+               purchaseDate: "12/3/2022"
+             }
+           ];
+  
+              const finderMock = query => {          
+                  if (query.getQuery().name === "BandAid") {
+                    return data;
+                  }
+                  return [];
+                }; 
+              mockingoose(FirstAid).toReturn(finderMock, "findOne").toReturn(req.body, "save");
+            });
+  
+        it("responds with 200", async () => {
+          await firstAidController.updateFirstAidItem(req, res);
+  
+          expect(res.status).toHaveBeenCalledWith(200);
+        });
+  
+        it("responds with firstAid item matching the name parameter", async () => {
+          await firstAidController.updateFirstAidItem(req, res);
+  
+          expect(send).toHaveBeenCalledWith(expect.objectContaining(req.body));
+        });
+      });
+    });
+  });
+
+
+
+///// deleteFirstAidItem /////
+describe("deleteFirstAidItem()", () => {
+    describe("when there is no user present", () => {
+      beforeEach(() => ((req.user = undefined)));
+  
+      it("responds with 401", () => {
+        firstAidController.deleteFirstAidItem(req, res);
+  
+        expect(res.status).toHaveBeenCalledWith(401);
+      });
+  
+      it("responds with 'Not Authenticated'", () => {
+        firstAidController.deleteFirstAidItem(req, res);
+  
+        expect(send).toHaveBeenCalledWith("Not Authenticated");
+      });
+    });
+    describe("when there is a user present", () => {
+      beforeEach(() => {
+        req.user = {
+          identifier: "testUser"
+        };
+      });
+  
+      describe("when firstAid item exists", () => {
+        beforeEach(() => {
+            req.params = { name: "Band-aid" }
+  
+            res.body = [
+                { acknowledged: true, deletedCount: 1 }
+            ];
+  
+            const finderMock = query => {     
+                // console.log(query.getQuery().name);     
+                if (query.getQuery().name === "Band-aid") {
+                    // console.log(req.body)
+                    return res.body;
+                }
+                return { acknowledged: false, deletedCount: 0 };
+                }; 
+                mockingoose(FirstAid).toReturn(finderMock, "deleteOne");
+            });
+  
+        it.only("responds with 200", async () => {
+          await firstAidController.deleteFirstAidItem(req, res);
+  
+          expect(res.status).toHaveBeenCalledWith(200);
+        });
+  
+        it.only("responds with firstAid item matching the name parameter", async () => {
+          await firstAidController.deleteFirstAidItem(req, res);
+  
+          expect(send).toHaveBeenCalledWith(expect.objectContaining(res.body));
+          console.log('===>>>', send)
+        });
+      });
+    });
+  });
+  
