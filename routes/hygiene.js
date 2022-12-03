@@ -7,13 +7,14 @@ const router = express.Router();
 //     updateValidator,
 //     destroyValidator
 // } = require('../validators/hygieneValidator.js');
-const loadUser = require("../middleware/loadUser");
 const hygieneController = require("../controllers/hygiene");
+const loadUser = require("../middleware/loadUser");
 
 router.use([loadUser]);
 
 router.get("/", hygieneController.getAllHygienes);
 router.get("/:name", hygieneController.getHygieneByName);
+router.get("/:id", hygieneController.getHygieneById);
 router.post("/", hygieneController.createNewHygiene);
 router.put("/:name", hygieneController.updateHygiene);
 router.delete("/:name", hygieneController.deleteHygiene);

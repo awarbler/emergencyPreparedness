@@ -1,54 +1,8 @@
+const hygiene = require("../models/hygiene");
 const Hygiene = require("../models/hygiene");
 
-const getAllHygienes = (req, res) => {
-  try {
-    if (!req.user) {
-      return res.status(401).send("Not Authenticated");
-    }
-
-    return Hygiene.find({})
-      .then((data) => {
-        console.log("======>", data);
-        console.log("1.Calling 'send'");
-        res.status(200).send(data);
-      })
-      .catch((err) => {
-        res.status(500).send({
-          message: err.message || "Some error occurred while retrieving Hygienes."
-        });
-      });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
-
-const getHygieneByName = (req, res) => {
-  try {
-    if (!req.user) {
-      return res.status(401).send("Not Authenticated");
-    }
-
-    const name = req.params.name;
-
-    if (!name) {
-      res.status(400).send("Must include email.");
-    }
-
-    Hygiene.find({ name: name })
-      .then((data) => {
-        res.status(200).send(data[0]);
-      })
-      .catch((err) => {
-        res.status(500).send({
-          message: err.message || "Some error occurred while retrieving the hygiene item."
-        });
-      });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
-
 const createNewHygiene = (req, res) => {
+  // #swagger.description = 'add Hygiene item'
   try {
     if (!req.user) {
       return res.status(401).send("Not Authenticated");
@@ -73,6 +27,85 @@ const createNewHygiene = (req, res) => {
       });
   } catch (err) {
     res.status(500).json(err);
+  }
+};
+
+const getAllHygienes = (req, res) => {
+  // #swagger.description = 'Get All hygiene items'
+  try {
+    if (!req.user) {
+      return res.status(401).send("Not Authenticated");
+    }
+
+    return Hygiene.find({})
+      .then((data) => {
+        // console.log("======>", data);
+        // console.log("1.Calling 'send'");
+        res.status(200).send(data);
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message: err.message || "Some error occurred while retrieving Hygienes."
+        });
+      });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const getHygieneById = (req, res) => {
+  // #swagger.description = 'Get hygiene by ID'
+  try {
+    if (!req.user) {
+      return res.status(401).send("Not Authenticated");
+    }
+    if (!ObjectId.isValid(req.parms.id)) {
+      res.status(400).send("Must be a valid id of a hygiene item.");
+    }
+    const hygieneID = req.params.id;
+
+    Hygiene.findById(hygieneID, (err, e) => {
+      if (err) {
+        res.status(500).send({
+          message: err.message || "Some error occurred while retrieving the hygiene item."
+        });
+      }
+      if (hygiene) {
+        res.status(200).send({
+          message: err.message || " There is not hygiene item by this id"
+        });
+      }
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const getHygieneByName = (req, res) => {
+  // #swagger.description = 'Get hygiene by name'
+  try {
+    if (!req.user) {
+      return res.status(401).send("Not Authenticated");
+    }
+
+    const name = req.params.name;
+
+    if (!name) {
+      res.status(400).send("Must include email.");
+    }
+
+    Hygiene.find({ name: name })
+      .then((data) => {
+        console.log("=======>", data);
+        res.status(200).send(data[0]);
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message: err.message || "Some error occurred while retrieving the hygiene item."
+        });
+      });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -140,5 +173,6 @@ module.exports = {
   getHygieneByName,
   createNewHygiene,
   updateHygiene,
-  deleteHygiene
+  deleteHygiene,
+  getHygieneById
 };

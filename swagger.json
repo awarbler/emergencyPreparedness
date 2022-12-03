@@ -7,7 +7,10 @@
   },
   "host": "",
   "basePath": "/",
-  "schemes": ["http", "https"],
+  "schemes": [
+    "http",
+    "https"
+  ],
   "securityDefinitions": {
     "Authorization": {
       "type": "apiKey",
@@ -128,7 +131,7 @@
     },
     "/hygienes/": {
       "get": {
-        "description": "",
+        "description": "Get All hygiene items",
         "parameters": [],
         "responses": {
           "200": {
@@ -143,7 +146,7 @@
         }
       },
       "post": {
-        "description": "",
+        "description": "add Hygiene item",
         "parameters": [
           {
             "name": "body",
@@ -157,7 +160,7 @@
                 "quantity": {
                   "example": "any"
                 },
-                "hygienePurchaseDate": {
+                "purchaseDate": {
                   "example": "any"
                 }
               }
@@ -182,7 +185,7 @@
     },
     "/hygienes/{name}": {
       "get": {
-        "description": "",
+        "description": "Get hygiene by name",
         "parameters": [
           {
             "name": "name",
@@ -227,7 +230,7 @@
                 "quantity": {
                   "example": "any"
                 },
-                "hygienePurchaseDate": {
+                "purchaseDate": {
                   "example": "any"
                 }
               }
@@ -254,6 +257,33 @@
         "parameters": [
           {
             "name": "name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/hygienes/{id}": {
+      "get": {
+        "description": "Get hygiene by ID",
+        "parameters": [
+          {
+            "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
