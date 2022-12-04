@@ -1,4 +1,5 @@
 const Food = require("../models/food");
+const mongoose = require("mongoose");
 
 const getAllFood = (req, res) => {
   try {
@@ -32,7 +33,7 @@ const getFoodByfoodName = (req, res) => {
       res.status(400).send("Must include the name of the food.");
     }
 
-    Food.find({ foodName: foodName })
+    return Food.find({ foodName: foodName })
       .then((data) => {
         res.status(200).send(data[0]);
       })
@@ -52,21 +53,8 @@ const createNewFoodItem = (req, res) => {
       return res.status(401).send("Not Authenticated");
     }
 
-    if (
-      !req.body.foodName ||
-      !req.body.brandName ||
-      !req.body.quantity ||
-      !req.body.purchaseDate ||
-      !req.body.expirationDate ||
-      !req.body.orderNextByDate ||
-      !req.body.description
-    ) {
-      res.status(400).send({ message: "Input can not be empty!" });
-      return;
-    }
-
     const food = new Food(req.body);
-    food
+    return food
       .save()
       .then((data) => {
         console.log(data);
@@ -90,20 +78,20 @@ const updateFoodItem = (req, res) => {
 
     const foodName = req.params.foodName;
 
-    if (
-      !req.body.foodName ||
-      !req.body.brandName ||
-      !req.body.quantity ||
-      !req.body.purchaseDate ||
-      !req.body.expirationDate ||
-      !req.body.orderNextByDate ||
-      !req.body.description
-    ) {
-      res.status(400).send({ message: "Input can not be empty!" });
-      return;
-    }
+    // if (
+    //   !req.body.foodName ||
+    //   !req.body.brandName ||
+    //   !req.body.quantity ||
+    //   !req.body.purchaseDate ||
+    //   !req.body.expirationDate ||
+    //   !req.body.orderNextByDate ||
+    //   !req.body.description
+    // ) {
+    //   res.status(400).send({ message: "Input can not be empty!" });
+    //   return;
+    // }
 
-    Food.findOne({ foodName: foodName }, function (err, food) {
+    return Food.findOne({ foodName: foodName }, function (err, food) {
       food.foodName = req.body.foodName;
       food.brandName = req.body.brandName;
       food.quantity = req.body.quantity;
@@ -133,7 +121,7 @@ const deleteFoodItem = (req, res) => {
     const foodName = req.params.foodName;
 
     if (!foodName) {
-      res.status(400).send({ message: "Cannot Find food item" });
+      res.status(400).send("Cannot Find food item" );
       return;
     }
 
