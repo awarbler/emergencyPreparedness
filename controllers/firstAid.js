@@ -1,4 +1,5 @@
 const FirstAid = require("../models/firstAid");
+const User = require("../models/user");
 const mongoose = require("mongoose");
 // const getFavFirstAidStorage = async (req, res) => {
 //   try {
@@ -12,11 +13,41 @@ const mongoose = require("mongoose");
 //   }
 // };
 
+// const getUserByIdentifier = (req) => {
+
+//   const identifier = req.params.identifier;
+//   const user = req.user.identifier;
+//   const findUser = User.find( route => route.user == user);
+//   const findUser = User.find({ identifier: identifier }).then((data) => {
+//     console.log(data)
+//     res.status(200).send(data);
+//   });
+
+//   return findUser;
+// }
+
+
+
 const getAllFirstAidItems = (req, res) => {
   try {
     if (!req.user) {
       return res.status(401).send("Not Authenticated");
-    }
+    } 
+    // else if (req.user && req.user.identifier === req.user ) {
+    //   return getAllFirstAidItems();
+    // }
+
+    // getUserByIdentifier(req.user);
+
+    // const identifier = req.params.identifier;
+    // const findUser = User.findOne({ identifier: identifier }).then((data) => {
+    //   console.log("return user", data)
+      
+    //   return data;
+    // });
+    // console.log("testing getUserByIdentifier", findUser)
+    // console.log("Testing req.user", req.user.identifier)
+    
 
     FirstAid.find({})
       .then((data) => {
