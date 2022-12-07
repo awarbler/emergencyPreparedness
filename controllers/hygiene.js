@@ -1,8 +1,15 @@
-const hygiene = require("../models/hygiene");
 const Hygiene = require("../models/hygiene");
+const { validationResult } = require("express-validator");
+const HttpError = require("../models/http.errors");
 
-const createNewHygiene = (req, res) => {
+const createNewHygiene = async (req, res) => {
   // #swagger.description = 'add Hygiene item'
+  // validation
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return next(new HttpError("Invalid inputs passed, please check your data", 422));
+  }
+
   try {
     if (!req.user) {
       return res.status(401).send("Not Authenticated");
@@ -36,7 +43,6 @@ const getAllHygienes = (req, res) => {
     if (!req.user) {
       return res.status(401).send("Not Authenticated");
     }
-
     return Hygiene.find({})
       .then((data) => {
         // console.log("======>", data);
@@ -84,26 +90,14 @@ const getHygieneById = (req, res) => {
 const getHygieneByName = (req, res) => {
   // #swagger.description = 'Get hygiene by name'
   try {
-    if (!req.user) {
-      return res.status(401).send("Not Authenticated");
+    if (!req.params.name) {
+      return res.status(400).json("Must use a valid  name to find a hygiene items.");
     }
-
     const name = req.params.name;
-
-    if (!name) {
-      res.status(400).send("Must include email.");
-    }
-
-    Hygiene.find({ name: name })
-      .then((data) => {
-        console.log("=======>", data);
-        res.status(200).send(data[0]);
-      })
-      .catch((err) => {
-        res.status(500).send({
-          message: err.message || "Some error occurred while retrieving the hygiene item."
-        });
-      });
+    return Hygiene.find({ name: name }).then((document) => {
+      console.log("=======>", data);
+      res.json(document[0]);
+    });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -115,18 +109,18 @@ const updateHygiene = (req, res) => {
       return res.status(401).send("Not Authenticated");
     }
 
-    const name = req.params.name;
+    const hygieneName = req.params.name;
 
-    if (!name) {
-      res.status(400).send("Must include name.");
-    }
+    // if (!hygieneName) {
+    //   res.status(400).send("Must include name.");
+    // }
 
-    if (!req.body.name || !req.body.quantity || !req.body.purchaseDate) {
-      res.status(400).send({ message: "Input can not be empty!" });
-      return;
-    }
+    // if (!req.body.name || !req.body.quantity || !req.body.purchaseDate) {
+    //   res.status(400).send({ message: "Input can not be empty!" });
+    //   return;
+    // }
 
-    Hygiene.findOne({ name: name }, function (err, hygiene) {
+    Hygiene.findOne({ name: hygieneName }, function (err, hygiene) {
       hygiene.name = req.body.name;
       hygiene.quantity = req.body.quantity;
       hygiene.purchaseDate = req.body.purchaseDate;
@@ -145,18 +139,18 @@ const updateHygiene = (req, res) => {
 
 const deleteHygiene = (req, res) => {
   try {
-    if (!req.user) {
-      return res.status(401).send("Not Authenticated");
-    }
+    // if (!req.user) {
+    //   return res.status(401).send("Not Authenticated");
+    // }
 
-    const name = req.params.name;
+    const hygieneName = req.params.name;
 
-    if (!name) {
+    if (!hygieneName) {
       res.status(400).send({ message: "Name Invalid" });
       return;
     }
 
-    Hygiene.deleteOne({ name: name }, (err, result) => {
+    Hygiene.deleteOne({ name: hygieneName }, (err, result) => {
       if (err) {
         res.status(500).json(err || "Some error occurred while deleting the hygiene item.");
       } else {

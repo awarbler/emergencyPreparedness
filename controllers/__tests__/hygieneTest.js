@@ -18,6 +18,7 @@ beforeEach(() => {
 describe("getAllHygienes()", () => {
   describe("when there is no user present", () => {
     beforeEach(() => (req.user = undefined));
+    console.log("no user");
 
     it("responds with 401", () => {
       hygieneController.getAllHygienes(req, res);
@@ -97,52 +98,43 @@ describe("getAllHygienes()", () => {
 });
 
 describe("getHygieneByName()", () => {
-  describe("when there is no user present", () => {
-    beforeEach(() => ((req.user = undefined), (req.name = undefined)));
-
-    it("responds with 401", () => {
-      hygieneController.getHygieneByName(req, res);
-
-      expect(res.status).toHaveBeenCalledWith(401);
-    });
-
-    it("responds with 'Not Authenticated'", () => {
-      hygieneController.getHygieneByName(req, res);
-
-      expect(send).toHaveBeenCalledWith("Not Authenticated");
-    });
-  });
+  // describe("when there is no user present", () => {
+  //   beforeEach(() => (req.user = undefined));
+  //   it.only("responds with 401", () => {
+  //     hygieneController.getHygieneByName(req, res);
+  //     expect(res.status).toHaveBeenCalledWith(401);
+  //   });
+  //   it("responds with 'Not Authenticated'", () => {
+  //     hygieneController.getHygieneByName(req, res);
+  //     expect(send).toHaveBeenCalledWith("Not Authenticated");
+  //   });
+  // });
   describe("when there is a user present", () => {
     beforeEach(() => {
       req.user = {
         identifier: "testUser"
       };
     });
-    // new start
-    // describe("when hygiene item by name is empty", () => {
-    //     beforeEach(() => {
-    //         data = [];
-    //         req.name = {
-    //             name: "BandAid",
-    //         };
-    //         mockingoose(Hygiene).toReturn([], 'find');
-
-    //         return Hygiene.find({ name: 'BandAid' }).then(doc => {
-    //             expect(JSON.parse(JSON.stringify(doc))).toMatchObject(data);
-    //         });
-    //     });
-
-    //     it("responds with 200", async () => {
-    //         await HygieneController.getHygieneItemByName(req, res);
-
-    //         expect(res.status).toHaveBeenCalledWith(200);
-    //     });
-
-    //     it("responds with an empty Hygiene item", async () => {
-    //         await HygieneController.getHygieneItemByName(req, res);
-
-    //         expect(send).toHaveBeenCalledWith([]);
-    //     });
+    describe("when hygiene item by name is empty", () => {
+      //     beforeEach(() => {
+      //         data = [];
+      //         req.name = {
+      //             name: "BandAid",
+      //         };
+      //         mockingoose(Hygiene).toReturn([], 'find');
+      //         return Hygiene.find({ name: 'BandAid' }).then(doc => {
+      //             expect(JSON.parse(JSON.stringify(doc))).toMatchObject(data);
+      //         });
+      //     });
+      //     it("responds with 200", async () => {
+      //         await HygieneController.getHygieneItemByName(req, res);
+      //         expect(res.status).toHaveBeenCalledWith(200);
+      //     });
+      //     it("responds with an empty Hygiene item", async () => {
+      //         await HygieneController.getHygieneItemByName(req, res);
+      //         expect(send).toHaveBeenCalledWith([]);
+      //     });
+    });
 
     describe("when hygiene item exists", () => {
       //   beforeEach(() => {

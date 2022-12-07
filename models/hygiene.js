@@ -1,9 +1,23 @@
-const { Schema, model } = require("mongoose");
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-const hygieneSchema = new Schema({
-  name: { type: String },
-  quantity: { type: String },
-  purchaseDate: { type: String }
+const HygieneSchema = new Schema({
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: "users"
+  },
+  name: {
+    type: String,
+    required: true
+  },
+  quantity: {
+    type: String,
+    required: true
+  },
+  purchaseDate: {
+    type: String,
+    required: true
+  }
 });
 
-module.exports = model("hygiene", hygieneSchema);
+module.exports = hygiene = mongoose.model("hygiene", HygieneSchema);
