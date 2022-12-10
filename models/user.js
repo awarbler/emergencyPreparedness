@@ -28,4 +28,4 @@ const userSchema = new Schema({
   // firstAidItems: { [firstAid]},
 });
 
-module.exports = User = mongoose.model("users", userSchema);
+module.exports = User = model("users", userSchema);
