@@ -156,14 +156,37 @@ const updateFirstAidItem = (req, res) => {
         } 
         else {
           res.status(204).send();
-          // console.log(res.status(204).send())
+          console.log(res.status(204).send())
         }
       });
     });
+    // const updateFirstAidDoc = {
+    //   name: req.body.name,
+    //   quantity: req.body.quantity,
+    //   purchaseDate: req.body.purchaseDate,
+
+    // };
+
+    // return FirstAid.updateOne(updateFirstAidDoc).then((data) => {
+    //     console.log("Create function in firstAid controller", data);
+    //     res.status(204).send(data);
+    //   })
+    //   .catch((err) => {
+    //     if (err instanceof mongoose.Error.ValidationError) {
+    //       res.status(422).send({ message: err.message || "Input can not be empty!" });
+    //     }
+    //     else { 
+    //         res.status(500).send({
+    //         message: err.message || "Some error occurred while updating the first-aid item."
+    //       });
+    //     }
+    //   });
   } catch (err) {
     res.status(500).json(err);
   }
 };
+
+
 
 const deleteFirstAidItem = (req, res) => {
   try {
@@ -177,18 +200,31 @@ const deleteFirstAidItem = (req, res) => {
       return;
     }
     console.log("===>in delete function", req.params.name)
-    return FirstAid.deleteOne({ name: name }, (err, result) => {
-      if (err) {
-        res.status(500).json(err || "Some error occurred while deleting the first-aid item.");
-      } else {
+    return FirstAid.deleteOne({ name: name })
+      .then((result) => {
+        console.log("Delete by name", result)
         res.status(200).send(result);
-        console.log(result)
-      }
-    });
+        console.log("Delete by name", result)
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message: err.message || "Some error occurred while deleting the first-aid item."
+        });
+      });
+    // return FirstAid.deleteOne({ name: name }, (err, result) => {
+    //   if (err) {
+    //     res.status(500).json(err || "Some error occurred while deleting the first-aid item.");
+    //   } else {
+    //     res.status(200).send(result);
+    //     console.log(result)
+    //   }
+    // });
   } catch (err) {
     res.status(500).json(err);
   }
 };
+
+
 
 module.exports = {
   getAllFirstAidItems,

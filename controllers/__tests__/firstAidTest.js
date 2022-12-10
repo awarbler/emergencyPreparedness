@@ -244,7 +244,7 @@ describe("updateFirstAidItem()", () => {
   
       describe("when firstAid item exists", () => {
           beforeEach(() => {
-              req.params = { name: "BandAid" }
+            req.params = { name: "BandAid" }
   
               data = [
                    {
@@ -254,33 +254,45 @@ describe("updateFirstAidItem()", () => {
                 }
               ];
 
-              req.body = [
+              res.body = [
                 {
                name: "Band-aid",
                quantity: "22",
                purchaseDate: "12/3/2022"
              }
            ];
-  
-              const finderMock = query => {          
+           
+           
+              const finderMock = query => {   
+                console.log(query.getQuery().name)       
                   if (query.getQuery().name === "BandAid") {
                     return data;
                   }
                   return [];
                 }; 
-              mockingoose(FirstAid).toReturn(finderMock, "findOne").toReturn(req.body, "save");
+              mockingoose(FirstAid).toReturn(finderMock, "findOne").toReturn(res.body, "save");
+
+          //     res.body = [
+          //       {
+          //      name: "Band-aid",
+          //      quantity: "22",
+          //      purchaseDate: "12/3/2022"
+          //    }
+          //  ];
+           
+          //     mockingoose(FirstAid).toReturn(res.body, "updateOne");
             });
   
-        it("responds with 200", async () => {
+        it.only("responds with 204", async () => {
           await firstAidController.updateFirstAidItem(req, res);
   
-          expect(res.status).toHaveBeenCalledWith(200);
+          expect(res.status).toHaveBeenCalledWith(204);
         });
   
-        it("responds with firstAid item matching the name parameter", async () => {
+        it.only("responds with firstAid item matching the name parameter", async () => {
           await firstAidController.updateFirstAidItem(req, res);
   
-          expect(send).toHaveBeenCalledWith(expect.objectContaining(req.body));
+          expect(send).toHaveBeenCalledWith(expect.objectContaining(res.body));
         });
       });
     });
@@ -331,17 +343,17 @@ describe("deleteFirstAidItem()", () => {
                 mockingoose(FirstAid).toReturn(finderMock, "deleteOne");
             });
   
-        it.only("responds with 200", async () => {
+        it("responds with 200", async () => {
           await firstAidController.deleteFirstAidItem(req, res);
   
           expect(res.status).toHaveBeenCalledWith(200);
         });
   
-        it.only("responds with firstAid item matching the name parameter", async () => {
+        it("responds with firstAid item matching the name parameter", async () => {
           await firstAidController.deleteFirstAidItem(req, res);
   
           expect(send).toHaveBeenCalledWith(expect.objectContaining(res.body));
-          console.log('===>>>', send)
+          // console.log('===>>>', send)
         });
       });
     });
