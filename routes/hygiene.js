@@ -1,12 +1,6 @@
 const express = require("express");
 const router = express.Router();
-// const { body, param } = require('express-validator');
-// const {
-//     createValidator,
-//     showValidator,
-//     updateValidator,
-//     destroyValidator
-// } = require('../validators/hygieneValidator.js');
+const mongoose = require("mongoose");
 const hygieneController = require("../controllers/hygiene");
 const loadUser = require("../middleware/loadUser");
 
