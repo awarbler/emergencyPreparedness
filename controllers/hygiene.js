@@ -59,33 +59,33 @@ const getAllHygienes = (req, res) => {
   }
 };
 
-const getHygieneById = (req, res) => {
-  // #swagger.description = 'Get hygiene by ID'
-  try {
-    if (!req.user) {
-      return res.status(401).send("Not Authenticated");
-    }
-    if (!ObjectId.isValid(req.parms.id)) {
-      res.status(400).send("Must be a valid id of a hygiene item.");
-    }
-    const hygieneID = req.params.id;
+// const getHygieneById = (req, res) => {
+//   // #swagger.description = 'Get hygiene by ID'
+//   try {
+//     if (!req.user) {
+//       return res.status(401).send("Not Authenticated");
+//     }
+//     if (!ObjectId.isValid(req.parms.id)) {
+//       res.status(400).send("Must be a valid id of a hygiene item.");
+//     }
+//     const hygieneID = req.params.id;
 
-    Hygiene.findById(hygieneID, (err, e) => {
-      if (err) {
-        res.status(500).send({
-          message: err.message || "Some error occurred while retrieving the hygiene item."
-        });
-      }
-      if (hygiene) {
-        res.status(200).send({
-          message: err.message || " There is not hygiene item by this id"
-        });
-      }
-    });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
+//     Hygiene.findById(hygieneID, (err, e) => {
+//       if (err) {
+//         res.status(500).send({
+//           message: err.message || "Some error occurred while retrieving the hygiene item."
+//         });
+//       }
+//       if (hygiene) {
+//         res.status(200).send({
+//           message: err.message || " There is not hygiene item by this id"
+//         });
+//       }
+//     });
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// };
 
 const getHygieneByName = (req, res) => {
   // #swagger.description = 'Get hygiene by name'

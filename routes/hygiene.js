@@ -8,7 +8,6 @@ router.use([loadUser]);
 
 router.get("/", hygieneController.getAllHygienes);
 router.get("/:name", hygieneController.getHygieneByName);
-router.get("/:id", hygieneController.getHygieneById);
 router.post("/", hygieneController.createNewHygiene);
 router.put("/:name", hygieneController.updateHygiene);
 router.delete("/:name", hygieneController.deleteHygiene);
