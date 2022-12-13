@@ -3,7 +3,7 @@ const { Schema, model } = require("mongoose");
 const foodSchema = new Schema({
   foodName: { type: String },
   brandName: { type: String },
-  quanitity: { type: String },
+  quantity: { type: String },
   purchaseDate: { type: String },
   expirationDate: { type: String },
   orderNextByDate: { type: String },
