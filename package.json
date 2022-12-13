@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "An application to track emergency preparedness items.",
   "main": "app.js",
+  "type": "module",
   "scripts": {
     "test": "jest",
     "start": "node app.js",
@@ -24,6 +25,7 @@
     "mockingoose": "^2.16.2",
     "nodemon": "^2.0.20",
     "prettier": "^2.7.1",
+    "supertest": "^6.3.2",
     "swagger-autogen": "^2.22.0"
   },
   "dependencies": {

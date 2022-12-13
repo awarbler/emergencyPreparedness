@@ -5,9 +5,9 @@ const mockingoose = require("mockingoose");
 
 import request from 'supertest';
 import { mocked } from 'ts-jest/utils';
-import getDbConnection from './db';
+import getDbConnection from '..initializers/db';
 
-jest.mock('./db');
+jest.mock('..intitalizers/db');
 
 const mGetDbConnection = mocked(getDbConnection);
 
@@ -30,3 +30,11 @@ describe('68825658', () => {
       });
   });
 });
+
+
+// describe('connection to the database', function(){
+//   it('succesfully connections', function(){
+//     const myDatabaseConnection = mocked(getDbConnection);
+
+//   })
+// });

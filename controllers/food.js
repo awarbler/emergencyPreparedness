@@ -61,9 +61,13 @@ const createNewFoodItem = (req, res) => {
         res.status(201).send(data);
       })
       .catch((err) => {
-        res.status(500).send({
-          message: err.message || "Some error occurred while creating the food item."
-        });
+        if (err instanceof mongoose.Error.ValidationError) {
+          res.status(422).send({ message: err.message || "Input is empty " });
+        } else {
+          res.status(500).send({
+            message: err.message || "Some error occurred while creating the food item."
+          });
+        }
       });
   } catch (err) {
     res.status(500).json(err);
@@ -76,34 +80,33 @@ const updateFoodItem = (req, res) => {
       return res.status(401).send("Not Authenticated");
     }
 
-    const foodName = req.params.foodName;
+    const name = req.params.name;
 
-    // if (
-    //   !req.body.foodName ||
-    //   !req.body.brandName ||
-    //   !req.body.quantity ||
-    //   !req.body.purchaseDate ||
-    //   !req.body.expirationDate ||
-    //   !req.body.orderNextByDate ||
-    //   !req.body.description
-    // ) {
-    //   res.status(400).send({ message: "Input can not be empty!" });
-    //   return;
-    // }
+    console.log("===>", req.params.name);
+    if (!name) {
+      res.status(400).send({ message: "Must use a valid  name to find a food item." });
+      return;
+    }
 
-    return Food.findOne({ foodName: foodName }, function (err, food) {
-      food.foodName = req.body.foodName;
-      food.brandName = req.body.brandName;
+    return Food.findOne({ name: name }, function (err, food) {
+      food.name = req.body.name;
       food.quantity = req.body.quantity;
       food.purchaseDate = req.body.purchaseDate;
       food.expirationDate = req.body.expirationDate;
       food.orderNextByDate = req.body.orderNextByDate;
       food.description = req.body.description;
-      food.save(function (err) {
-        if (err) {
+      food.save(
+        function (err) {
+        if (err instanceof mongoose.Error.ValidationError) {
+          res.status(422).send({ message: err.message || "Input can not be empty!" });
+        } 
+        else if (err) {
           res.status(500).json(err || "Some error occurred while updating the food item.");
-        } else {
+        } 
+        else {
           res.status(204).send();
+          console.log("=====>send the updated data");
+          
         }
       });
     });
@@ -125,13 +128,15 @@ const deleteFoodItem = (req, res) => {
       return;
     }
 
-    Food.deleteOne({ foodName: foodName }, (err, result) => {
-      if (err) {
-        res.status(500).json(err || "Some error occurred while deleting the food item.");
-      } else {
+    return Food.deleteFoodItem({ foodName: foodName})
+      .then((result) => {
         res.status(200).send(result);
-      }
-    });
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message: err.message || "Some error occurred while retrieving Food."
+        });
+      });
   } catch (err) {
     res.status(500).json(err);
   }
