@@ -105,7 +105,7 @@ describe("getHygieneByName()", () => {
   describe("when there is no user present", () => {
     beforeEach(() => ((req.user = undefined), (req.name = undefined)));
 
-    it.only("responds with 401", () => {
+    it("responds with 401", () => {
       hygieneController.getHygieneByName(req, res);
 
       expect(res.status).toHaveBeenCalledWith(401);
@@ -279,7 +279,7 @@ describe("deleteHygiene())", () => {
   describe("when there is no user present", () => {
     beforeEach(() => (req.user = undefined));
 
-    it.only("responds with 401", () => {
+    it("responds with 401", () => {
       hygieneController.deleteHygiene(req, res);
 
       expect(res.status).toHaveBeenCalledWith(401);
@@ -306,12 +306,13 @@ describe("deleteHygiene())", () => {
 
         const finderMock = (query) => {
           if (query.getQuery().name === "Dial Soap") {
-            return data;
+            return res.body;
           }
-          return [];
+          // return [];
+          return { acknowledged: false, deletedCount: 0 };
         };
 
-        mockingoose(Hygiene).toReturn(req.body, "save");
+        mockingoose(Hygiene).toReturn(finderMock, "deleteOne");
       });
 
       it("responds with 200", async () => {
@@ -321,9 +322,10 @@ describe("deleteHygiene())", () => {
       });
 
       it("responds with hygiene item matches", async () => {
-        await hygieneController.createNewHygiene(req, res);
+        await hygieneController.deleteHygiene(req, res);
 
         expect(send).toHaveBeenCalledWith(expect.objectContaining(req.body));
+        console.log("===>>>", send);
       });
     });
   });
