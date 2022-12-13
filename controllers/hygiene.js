@@ -144,21 +144,26 @@ const updateHygiene = (req, res) => {
     //   return;
     // }
 
-    return Hygiene.findOne({ name: name }, function (err, hygiene) {
-      hygiene.name = req.body.name;
-      hygiene.quantity = req.body.quantity;
-      hygiene.purchaseDate = req.body.purchaseDate;
-      hygiene.save(function (err) {
-        if (err instanceof mongoose.Error.ValidationError) {
-          res.status(422).send({ message: err.message || "Input is empty " });
-        } else if (err) {
-          res.status(500).json(err || "Some error occurred while creating the hygiene item.");
-        } else {
-          res.status(204).send();
-          console.log(res.status(204).send());
-        }
-      });
-    });
+    return Hygiene.updateOne(
+      { name: name },
+      { quantity: quantity },
+      { purchaseDate: purchaseDate },
+      function (err, hygiene) {
+        hygiene.name = req.body.name;
+        hygiene.quantity = req.body.quantity;
+        hygiene.purchaseDate = req.body.purchaseDate;
+        hygiene.save(function (err) {
+          if (err instanceof mongoose.Error.ValidationError) {
+            res.status(422).send({ message: err.message || "Input is empty " });
+          } else if (err) {
+            res.status(500).json(err || "Some error occurred while creating the hygiene item.");
+          } else {
+            res.status(204).send();
+            console.log(res.status(204).send());
+          }
+        });
+      }
+    );
   } catch (err) {
     res.status(500).json(err);
   }
