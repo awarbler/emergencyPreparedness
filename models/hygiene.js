@@ -1,7 +1,5 @@
 const { Schema, model } = require("mongoose");
 
-const { Schema, model } = require("mongoose");
-
 const HygieneSchema = new Schema({
   name: {
     type: String,
