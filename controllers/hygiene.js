@@ -167,6 +167,5 @@ module.exports = {
   getHygieneByName,
   createNewHygiene,
   updateHygiene,
-  deleteHygiene,
-  getHygieneById
+  deleteHygiene
 };
