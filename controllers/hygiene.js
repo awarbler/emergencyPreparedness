@@ -146,8 +146,8 @@ const updateHygiene = (req, res) => {
 
     return Hygiene.updateOne(
       { name: name },
-      { quantity: quantity },
-      { purchaseDate: purchaseDate },
+      // { quantity: quantity },
+      // { purchaseDate: purchaseDate },
       function (err, hygiene) {
         hygiene.name = req.body.name;
         hygiene.quantity = req.body.quantity;
