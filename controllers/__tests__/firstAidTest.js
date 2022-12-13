@@ -244,43 +244,57 @@ describe("updateFirstAidItem()", () => {
   
       describe("when firstAid item exists", () => {
           beforeEach(() => {
-            req.params = { name: "BandAid" }
+      //       req.params = { name: "BandAid" }
   
-              data = [
-                   {
-                  name: "BandAid",
-                  quantity: "18",
-                  purchaseDate: "11/30/2022"
-                }
-              ];
+      //         data = [
+      //              {
+      //             name: "BandAid",
+      //             quantity: "18",
+      //             purchaseDate: "11/30/2022"
+      //           }
+      //         ];
 
-              res.body = [
+      //         req.body = [
+      //           {
+      //          name: "Band-aid",
+      //          quantity: "22",
+      //          purchaseDate: "12/3/2022"
+      //        }
+      //      ];
+
+      //      res.body = [
+      //       {
+      //         acknowledged: true, modifiedCount: 1
+      //    }
+      //  ];
+           
+           
+      //         const finderMock = query => {   
+      //           console.log(query.getQuery().name)       
+      //             if (query.getQuery().name === "BandAid") {
+      //               return req.params;
+      //             }
+      //             return [];
+      //           }; 
+      //         mockingoose(FirstAid).toReturn(finderMock, "findOne").toReturn(res.body, "save");
+
+          req.params = { name: "BandAid" };
+
+              req.body = [
                 {
-               name: "Band-aid",
-               quantity: "22",
-               purchaseDate: "12/3/2022"
+                  acknowledged: true, modifiedCount: 1
              }
            ];
-           
-           
-              const finderMock = query => {   
-                console.log(query.getQuery().name)       
-                  if (query.getQuery().name === "BandAid") {
-                    return data;
-                  }
-                  return [];
-                }; 
-              mockingoose(FirstAid).toReturn(finderMock, "findOne").toReturn(res.body, "save");
 
-          //     res.body = [
-          //       {
-          //      name: "Band-aid",
-          //      quantity: "22",
-          //      purchaseDate: "12/3/2022"
-          //    }
-          //  ];
+           const finderMock = query => {   
+                  console.log(query.getQuery().name)       
+                    if (query.getQuery().name === "BandAid") {
+                      return req.body;
+                    }
+                    return { acknowledged: false, modifiedCount: 0 };
+                  }; 
            
-          //     mockingoose(FirstAid).toReturn(res.body, "updateOne");
+              mockingoose(FirstAid).toReturn(finderMock, "updateOne");
             });
   
         it.only("responds with 204", async () => {
@@ -291,8 +305,9 @@ describe("updateFirstAidItem()", () => {
   
         it.only("responds with firstAid item matching the name parameter", async () => {
           await firstAidController.updateFirstAidItem(req, res);
-  
-          expect(send).toHaveBeenCalledWith(expect.objectContaining(res.body));
+          
+          console.log("2. assertion")
+          expect(send).toHaveBeenCalledWith(expect.objectContaining(req.body));
         });
       });
     });

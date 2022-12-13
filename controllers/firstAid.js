@@ -132,7 +132,7 @@ const updateFirstAidItem = (req, res) => {
     }
     const name = req.params.name;
 
-    console.log("===>", req.params.name)
+    // console.log("===>", req.params.name)
       if (!name) {
         res.status(400).send({ message: 'Invalid name Supplied' });
         return;
@@ -143,44 +143,61 @@ const updateFirstAidItem = (req, res) => {
     //   return;
     // }
 
-    return FirstAid.findOne({ name: name }, function (err, firstAid) {
-      firstAid.name = req.body.name;
-      firstAid.quantity = req.body.quantity;
-      firstAid.purchaseDate = req.body.purchaseDate;
-      firstAid.save(function (err) {
-        if (err instanceof mongoose.Error.ValidationError) {
-          res.status(422).send({ message: err.message || "Input can not be empty!" });
-        } 
-        else if (err) {
-          res.status(500).json(err || "Some error occurred while updating the first-aid item.");
-        } 
-        else {
-          res.status(204).send();
-          console.log(res.status(204).send())
-        }
-      });
-    });
-    // const updateFirstAidDoc = {
-    //   name: req.body.name,
-    //   quantity: req.body.quantity,
-    //   purchaseDate: req.body.purchaseDate,
-
-    // };
-
-    // return FirstAid.updateOne(updateFirstAidDoc).then((data) => {
-    //     console.log("Create function in firstAid controller", data);
-    //     res.status(204).send(data);
-    //   })
-    //   .catch((err) => {
+    // return FirstAid.findOne({ name: name }, function (err, firstAid) {
+    //   firstAid.name = req.body.name;
+    //   firstAid.quantity = req.body.quantity;
+    //   firstAid.purchaseDate = req.body.purchaseDate;
+    //   firstAid.save(
+    //     function (err) {
     //     if (err instanceof mongoose.Error.ValidationError) {
     //       res.status(422).send({ message: err.message || "Input can not be empty!" });
-    //     }
-    //     else { 
-    //         res.status(500).send({
-    //         message: err.message || "Some error occurred while updating the first-aid item."
-    //       });
+    //     } 
+    //     else if (err) {
+    //       res.status(500).json(err || "Some error occurred while updating the first-aid item.");
+    //     } 
+    //     else {
+    //       console.log("1. sending the data")
+    //       res.status(204).send();
+          
     //     }
     //   });
+    // });
+    const updateFirstAidDoc = {
+      name: req.body.name,
+      quantity: req.body.quantity,
+      purchaseDate: req.body.purchaseDate,
+
+    };
+
+    return FirstAid.updateOne({ name: name }, updateFirstAidDoc).then((data, err) => {
+      // console.log("1. sending the data")
+      //   res.status(204).send(data);
+      //   console.log("Create function in firstAid controller", data);
+        if (err instanceof mongoose.Error.ValidationError) {
+          res.status(422).send({ message: err.message || "Input can not be empty!" });
+        }
+        else if (err) {
+          res.status(500).send({
+            message: err.message || "Some error occurred while updating the first-aid item."
+          });
+        }
+        else { 
+          console.log("1. sending the data")
+          res.status(204).send(data);
+        console.log("Create function in firstAid controller", data);
+            
+        }
+      })
+      // .catch((err) => {
+      //   if (err instanceof mongoose.Error.ValidationError) {
+      //     res.status(422).send({ message: err.message || "Input can not be empty!" });
+      //   }
+      //   else { 
+      //       res.status(500).send({
+      //       message: err.message || "Some error occurred while updating the first-aid item."
+      //     });
+      //   }
+      // });
   } catch (err) {
     res.status(500).json(err);
   }
