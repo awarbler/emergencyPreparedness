@@ -95,7 +95,7 @@ const getHygieneByName = (req, res) => {
     }
     const name = req.params.name;
     return Hygiene.find({ name: name }).then((document) => {
-      console.log("=======>", data);
+      console.log("=======>", document);
       res.json(document[0]);
     });
   } catch (err) {
