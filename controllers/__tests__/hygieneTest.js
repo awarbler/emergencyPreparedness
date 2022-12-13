@@ -2,16 +2,16 @@ const hygieneController = require("../hygiene");
 const mongoose = require("mongoose");
 const mockingoose = require("mockingoose");
 const Hygiene = require("../../models/hygiene");
-const { query } = require("express");
 
 let req, res, send;
 
 beforeEach(() => {
-  send = jest.fn();
-
   req = {};
+  send = jest.fn();
   res = {
-    status: jest.fn(() => ({ send })),
+    status: jest.fn(() => ({
+      send
+    })),
     json: jest.fn()
   };
 });
@@ -19,7 +19,6 @@ beforeEach(() => {
 describe("getAllHygienes()", () => {
   describe("when there is no user present", () => {
     beforeEach(() => (req.user = undefined));
-    console.log("no user");
 
     it("responds with 401", () => {
       hygieneController.getAllHygienes(req, res);
@@ -104,7 +103,7 @@ describe("getAllHygienes()", () => {
 
 describe("getHygieneByName()", () => {
   describe("when there is no user present", () => {
-    beforeEach(() => (req.user = undefined));
+    beforeEach(() => ((req.user = undefined), (req.name = undefined)));
 
     it.only("responds with 401", () => {
       hygieneController.getHygieneByName(req, res);
