@@ -1,5 +1,5 @@
 const Hygiene = require("../models/hygiene");
-const User = require("../models/users");
+const User = require("../models/user");
 const mongoose = require("mongoose");
 // const { validationResult } = require("express-validator");
 // const HttpError = require("../models/http.errors");
