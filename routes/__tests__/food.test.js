@@ -15,17 +15,17 @@ describe("routes", () => {
     });
     
 
-    describe("/:name", () => {
+    describe("/:foodName", () => {
         it("GET request", () => {
             expect(routes["/:name"]).toContain("get");
         });
     
         it("PUT request", () => {
-            expect(routes["/:name"]).toContain("put");
+            expect(routes["/:foodName"]).toContain("put");
         });
 
         it("DELETE request", () => {
-            expect(routes["/:name"]).toContain("delete");
+            expect(routes["/:foodName"]).toContain("delete");
         });
     });
 })
