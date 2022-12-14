@@ -2,6 +2,7 @@ const hygieneController = require("../hygiene");
 const mongoose = require("mongoose");
 const mockingoose = require("mockingoose");
 const Hygiene = require("../../models/hygiene");
+const { register } = require("rest/mime/registry");
 
 let req, res, send;
 
@@ -59,24 +60,15 @@ describe("getAllHygienes()", () => {
 
       describe("when hygiene items exist", () => {
         beforeEach(() => {
-          // data = [
-          //   {
-          //     name: "Dial Soap",
-          //     quantity: "18",
-          //     purchaseDate: "11/30/2022"
-          //   }
-          // ];
+          data = [
+            {
+              name: "Dial Soap",
+              quantity: "18",
+              purchaseDate: "11/30/2022"
+            }
+          ];
 
-          mockingoose(Hygiene).toReturn(
-            [
-              {
-                name: "Dial Soap",
-                quantity: "18",
-                purchaseDate: "11/30/2022"
-              }
-            ],
-            "find"
-          );
+          mockingoose(Hygiene).toReturn(data, "find");
         });
 
         it("responds with 200", async () => {
@@ -205,6 +197,28 @@ describe("createNewHygiene())", () => {
         expect(send).toHaveBeenCalledWith(expect.objectContaining(req.body));
       });
     });
+    describe("when user creates a hygiene post and is invalid", () => {
+      beforeEach(() => {
+        req.body = {
+          name: "Dial Soap",
+          quantity: "20"
+        };
+      });
+
+      it("responds with 422", async () => {
+        await hygieneController.createNewHygiene(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(422);
+      });
+
+      it("responds with a validation error", async () => {
+        await hygieneController.createNewHygiene(req, res);
+
+        expect(send).toHaveBeenCalledWith({
+          message: "hygiene validation failed: purchaseDate: Path `purchaseDate` is required."
+        });
+      });
+    });
   });
 });
 
@@ -230,50 +244,102 @@ describe("updateHygiene()", () => {
         identifier: "testUser"
       };
     });
-
-    describe("when hygiene item exists", () => {
+    describe("when hygiene get update and is valid", () => {
       beforeEach(() => {
-        req.params = { name: "Dial Soap" };
-
-        data = [
-          {
-            name: "Dial Soap",
-            quantity: "18",
-            purchaseDate: "11/30/2022"
-          }
-        ];
-
+        reg.params = { name: "Dial Soap" };
         req.body = [
           {
-            name: "Dial Soap",
-            quantity: "18",
-            purchaseDate: "11/30/2022"
+            acknowledged: true,
+            modifiedCount: 1
           }
         ];
-
         const finderMock = (query) => {
+          console.log(query.getQuery().name);
           if (query.getQuery().name === "Dial Soap") {
-            return data;
+            return req.body;
           }
-          return [];
+          return { acknowledged: true, modifiedCount: 0 };
         };
-        mockingoose(Hygiene).toReturn(finderMock, "find");
+        mockingoose(FirstAid).toReturn(finderMock, "updateOne");
       });
 
-      it("responds with 200", async () => {
+      it("responds with 204", async () => {
         await hygieneController.updateHygiene(req, res);
-
-        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.status).toHaveBeenCalledWith(204);
       });
 
-      it("responds with hygiene item matches requested parameter", async () => {
+      it("responds with successful updated firstAid item", async () => {
         await hygieneController.updateHygiene(req, res);
-        //console.log("2. Doing the assertion with 'expect");
-        expect(send).toHaveBeenCalledWith(expect.objectContaining(data[0]));
+
+        console.log("2. assertion");
+        expect(send).toHaveBeenCalledWith(expect.objectContaining(req.body));
+      });
+    });
+    describe("when the hygiene item gets updated and is invalid", () => {
+      beforeEach(() => {
+        req.body = {
+          name: "Dial Soap",
+          quantity: "20"
+        };
+      });
+      it("responds with 422", async () => {
+        await hygieneController.createNewHygiene(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(422);
+      });
+
+      it("responds with a validation error", async () => {
+        await hygieneController.createNewHygiene(req, res);
+
+        expect(send).toHaveBeenCalledWith({
+          message: "hygiene validation failed: purchaseDate: Path `purchaseDate` is required."
+        });
       });
     });
   });
 });
+
+// describe("when hygiene item exists", () => {
+//   beforeEach(() => {
+//     req.params = { name: "Dial Soap" };
+
+//     data = [
+//       {
+//         name: "Dial Soap",
+//         quantity: "18",
+//         purchaseDate: "11/30/2022"
+//       }
+//     ];
+
+//     req.body = [
+//       {
+//         name: "Dial Soap",
+//         quantity: "18",
+//         purchaseDate: "11/30/2022"
+//       }
+//     ];
+
+//   const finderMock = (query) => {
+//     if (query.getQuery().name === "Dial Soap") {
+//       return data;
+//     }
+//     return [];
+//   };
+//   mockingoose(Hygiene).toReturn(finderMock, "find");
+// });
+
+//   it("responds with 200", async () => {
+//     await hygieneController.updateHygiene(req, res);
+
+//     expect(res.status).toHaveBeenCalledWith(200);
+//   });
+
+//   it("responds with hygiene item matches requested parameter", async () => {
+//     await hygieneController.updateHygiene(req, res);
+//     //console.log("2. Doing the assertion with 'expect");
+//     expect(send).toHaveBeenCalledWith(expect.objectContaining(data[0]));
+//   });
+// });
 
 describe("deleteHygiene())", () => {
   describe("when there is no user present", () => {
