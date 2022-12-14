@@ -80,16 +80,16 @@ const updateFoodItem = (req, res) => {
       return res.status(401).send("Not Authenticated");
     }
 
-    const name = req.params.name;
+    const foodName = req.params.foodName;
 
-    console.log("===>", req.params.name);
-    if (!name) {
+    console.log("===>", req.params.foodName);
+    if (!foodName) {
       res.status(400).send({ message: "Must use a valid  name to find a food item." });
       return;
     }
 
-    return Food.findOne({ name: name }, function (err, food) {
-      food.name = req.body.name;
+    return Food.findOne({ foodName: foodName }, function (err, food) {
+      food.foodName = req.body.foodName;
       food.quantity = req.body.quantity;
       food.purchaseDate = req.body.purchaseDate;
       food.expirationDate = req.body.expirationDate;
