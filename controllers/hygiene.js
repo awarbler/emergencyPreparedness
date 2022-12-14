@@ -128,7 +128,7 @@ const updateHygiene = (req, res) => {
 
     const name = req.params.name;
 
-    console.log("===>", req.params.name);
+    // console.log("===>", req.params.name);
     if (!name) {
       res.status(400).send({ message: "Must use a valid  name to find a hygiene items." });
       return;
@@ -171,7 +171,7 @@ const updateHygiene = (req, res) => {
       purchaseDate: req.body.purchaseDate
     };
 
-    return Hygiene.updateOne({ name: name }, updateHygiene, opts)
+    return Hygiene.updateOne({ name: name }, updateHygieneDoc, opts)
       .then((data, err) => {
         console.log("1. sending data");
         // hygiene.name = req.body.name;
@@ -185,7 +185,7 @@ const updateHygiene = (req, res) => {
         //   } else {
         res.status(204).send(data);
         console.log("create function in hygiene controller", data);
-        console.log("=====>send the updated data");
+        // console.log("=====>send the updated data");
       })
       .catch((err) => {
         if (opts) {
