@@ -128,7 +128,7 @@ const deleteFoodItem = (req, res) => {
       return;
     }
 
-    return Food.deleteFoodItem({ foodName: foodName})
+    return Food.deleteOne({ foodName: foodName})
       .then((result) => {
         res.status(200).send(result);
       })
