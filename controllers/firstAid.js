@@ -162,6 +162,62 @@ const updateFirstAidItem = (req, res) => {
     //     }
     //   });
     // });
+
+    // const findOne =  FirstAid.findOne({ name: name }).then((data) => {
+    //   console.log("1. sending the data")
+    //       res.status(204).send(data);
+    //       console.log("Create function in firstAid controller", data);
+    // });
+    // return findOne;
+
+    // const updateFirstAidDoc = {
+    //   name: req.body.name,
+    //   quantity: req.body.quantity,
+    //   purchaseDate: req.body.purchaseDate,
+
+    // };
+
+    // return FirstAid.updateOne({ name: name }, updateFirstAidDoc).then((data, err) => {
+    //     if (err instanceof mongoose.Error.ValidationError) {
+    //       res.status(422).send({ message: err.message || "Input can not be empty!" });
+    //     }
+    //     else if (err) {
+    //       res.status(500).send({
+    //         message: err.message || "Some error occurred while updating the first-aid item."
+    //       });
+    //     }
+    //     else { 
+    //       console.log("1. sending the data")
+    //       res.status(204).send(data);
+    //     console.log("Create function in firstAid controller", data);
+            
+    //     }
+    //   })
+
+    // const updateFirstAidDoc = {
+    //   name: req.body.name,
+    //   quantity: req.body.quantity,
+    //   purchaseDate: req.body.purchaseDate,
+
+    // };
+
+    // return FirstAid.updateOne({ name: name }, updateFirstAidDoc, function (err, data) {
+    //   if (err instanceof mongoose.Error.ValidationError) {
+    //     res.status(422).send({ message: err.message || "Input can not be empty!" });
+    //   }
+    //   else if (err) {
+    //     res.status(500).send({
+    //       message: err.message || "Some error occurred while updating the first-aid item."
+    //     });
+    //   }
+    //   else { 
+    //       console.log("1. sending the data")
+    //       res.status(204).send(data);
+    //       console.log("Create function in firstAid controller", data);
+    //   }
+    // })
+
+    const opts = { runValidators: true };
     const updateFirstAidDoc = {
       name: req.body.name,
       quantity: req.body.quantity,
@@ -169,35 +225,23 @@ const updateFirstAidItem = (req, res) => {
 
     };
 
-    return FirstAid.updateOne({ name: name }, updateFirstAidDoc).then((data, err) => {
-      // console.log("1. sending the data")
-      //   res.status(204).send(data);
-      //   console.log("Create function in firstAid controller", data);
-        if (err instanceof mongoose.Error.ValidationError) {
-          res.status(422).send({ message: err.message || "Input can not be empty!" });
-        }
-        else if (err) {
-          res.status(500).send({
-            message: err.message || "Some error occurred while updating the first-aid item."
-          });
-        }
-        else { 
+    return FirstAid.updateOne({ name: name }, updateFirstAidDoc, opts).then((data, err) => {
           console.log("1. sending the data")
           res.status(204).send(data);
         console.log("Create function in firstAid controller", data);
             
-        }
+       
       })
-      // .catch((err) => {
-      //   if (err instanceof mongoose.Error.ValidationError) {
-      //     res.status(422).send({ message: err.message || "Input can not be empty!" });
-      //   }
-      //   else { 
-      //       res.status(500).send({
-      //       message: err.message || "Some error occurred while updating the first-aid item."
-      //     });
-      //   }
-      // });
+      .catch((err) => {
+        if (opts) {
+          res.status(422).send({ message: err.message || "Input can not be empty!" });
+        }
+        else { 
+            res.status(500).send({
+            message: err.message || "Some error occurred while updating the first-aid item."
+          });
+        }
+      });
   } catch (err) {
     res.status(500).json(err);
   }

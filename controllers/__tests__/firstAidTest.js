@@ -184,9 +184,7 @@ describe("createNewFirstAidItem()", () => {
   describe("when there is a user present", () => {
     beforeEach(() => {
       req.user = {
-        identifier: "testUser"
-
-        //   save: jest.fn(async () => true),
+        identifier: "testUser",
       };
     });
 
@@ -210,6 +208,27 @@ describe("createNewFirstAidItem()", () => {
         await firstAidController.createNewFirstAidItem(req, res);
 
         expect(send).toHaveBeenCalledWith(expect.objectContaining(req.body));
+      });
+    });
+    describe("when the firstAid is invalid", () => {
+      beforeEach(() => {
+        req.body = {
+          name: "BandAids",
+          quantity: "20",
+        };
+
+      });
+
+      it("responds with 422", async () => {
+        await firstAidController.createNewFirstAidItem(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(422);
+      });
+
+      it("responds with the error", async () => {
+        await firstAidController.createNewFirstAidItem(req, res);
+  
+        expect(send).toHaveBeenCalledWith({"message": "first-aids validation failed: purchaseDate: Path `purchaseDate` is required."});
       });
     });
   });
@@ -345,6 +364,27 @@ describe("updateFirstAidItem()", () => {
           
           console.log("2. assertion")
           expect(send).toHaveBeenCalledWith(expect.objectContaining(req.body));
+        });
+      });
+      describe("when the firstAid is invalid", () => {
+        beforeEach(() => {
+          req.body = {
+            name: "BandAids",
+            quantity: "20",
+          };
+  
+        });
+  
+        it("responds with 422", async () => {
+          await firstAidController.createNewFirstAidItem(req, res);
+  
+          expect(res.status).toHaveBeenCalledWith(422);
+        });
+  
+        it("responds with the error", async () => {
+          await firstAidController.createNewFirstAidItem(req, res);
+    
+          expect(send).toHaveBeenCalledWith({"message": "first-aids validation failed: purchaseDate: Path `purchaseDate` is required."});
         });
       });
     });
