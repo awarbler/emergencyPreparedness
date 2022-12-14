@@ -342,7 +342,7 @@ describe("updateHygiene()", () => {
           return { acknowledged: true, modifiedCount: 0 };
         };
 
-        mockingoose(hygiene).toReturn(finderMock, "updateOne");
+        mockingoose(Hygiene).toReturn(finderMock, "updateOne");
       });
 
       it("responds with 204", async () => {
