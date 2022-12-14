@@ -43,8 +43,8 @@ describe("getAllFirstAidItems()", () => {
 
     describe("when firstAid array is empty", () => {
       beforeEach(() => {
-        // data = [];
-        mockingoose(FirstAid).toReturn([], "find");
+        data = [];
+        mockingoose(FirstAid).toReturn(data, "find");
       });
 
       it("responds with 200", async () => {
@@ -61,24 +61,15 @@ describe("getAllFirstAidItems()", () => {
 
       describe("when firstAid items exist", () => {
         beforeEach(() => {
-          // data = [
-          //     {
-          //         name: "BandAid",
-          //         quantity: "18",
-          //         purchaseDate: "11/30/2022",
-          //     }
-          // ];
-
-          mockingoose(FirstAid).toReturn(
-            [
+          data = [
               {
-                name: "BandAid",
-                quantity: "18",
-                purchaseDate: "11/30/2022"
+                  name: "BandAid",
+                  quantity: "18",
+                  purchaseDate: "11/30/2022",
               }
-            ],
-            "find"
-          );
+          ];
+
+          mockingoose(FirstAid).toReturn(data, "find");
         });
 
         it("responds with 200", async () => {
@@ -210,7 +201,7 @@ describe("createNewFirstAidItem()", () => {
         expect(send).toHaveBeenCalledWith(expect.objectContaining(req.body));
       });
     });
-    describe("when the firstAid is invalid", () => {
+    describe("when user creates a firstAid post and is invalid", () => {
       beforeEach(() => {
         req.body = {
           name: "BandAids",
@@ -225,7 +216,7 @@ describe("createNewFirstAidItem()", () => {
         expect(res.status).toHaveBeenCalledWith(422);
       });
 
-      it("responds with the error", async () => {
+      it("responds with a validation error", async () => {
         await firstAidController.createNewFirstAidItem(req, res);
   
         expect(send).toHaveBeenCalledWith({"message": "first-aids validation failed: purchaseDate: Path `purchaseDate` is required."});
@@ -298,7 +289,7 @@ describe("updateFirstAidItem()", () => {
     //         mockingoose(FirstAid).toReturn(res.body, "updateOne");
     //   });
   
-      describe("when firstAid item exists", () => {
+      describe("when firstAid item gets updated and is valid", () => {
           beforeEach(() => {
       //       req.params = { name: "BandAid" }
   
@@ -347,26 +338,26 @@ describe("updateFirstAidItem()", () => {
                     if (query.getQuery().name === "BandAid") {
                       return req.body;
                     }
-                    return { acknowledged: false, modifiedCount: 0 };
+                    return { acknowledged: true, modifiedCount: 0 };
                   }; 
            
               mockingoose(FirstAid).toReturn(finderMock, "updateOne");
             });
   
-        it.only("responds with 204", async () => {
+        it("responds with 204", async () => {
           await firstAidController.updateFirstAidItem(req, res);
   
           expect(res.status).toHaveBeenCalledWith(204);
         });
   
-        it.only("responds with firstAid item matching the name parameter", async () => {
+        it("responds with successful updated firstAid item", async () => {
           await firstAidController.updateFirstAidItem(req, res);
           
           console.log("2. assertion")
           expect(send).toHaveBeenCalledWith(expect.objectContaining(req.body));
         });
       });
-      describe("when the firstAid is invalid", () => {
+      describe("when the firstAid item gets updated and is invalid", () => {
         beforeEach(() => {
           req.body = {
             name: "BandAids",
@@ -381,7 +372,7 @@ describe("updateFirstAidItem()", () => {
           expect(res.status).toHaveBeenCalledWith(422);
         });
   
-        it("responds with the error", async () => {
+        it("responds with a validation error", async () => {
           await firstAidController.createNewFirstAidItem(req, res);
     
           expect(send).toHaveBeenCalledWith({"message": "first-aids validation failed: purchaseDate: Path `purchaseDate` is required."});
@@ -415,7 +406,7 @@ describe("deleteFirstAidItem()", () => {
       };
     });
 
-    describe("when firstAid item exists", () => {
+    describe("when firstAid item gets deleted and is valid", () => {
       beforeEach(() => {
         req.params = { name: "Band-aid" };
 
@@ -438,7 +429,7 @@ describe("deleteFirstAidItem()", () => {
         expect(res.status).toHaveBeenCalledWith(200);
       });
 
-      it("responds with firstAid item matching the name parameter", async () => {
+      it("responds with successful deleted firstAid item", async () => {
         await firstAidController.deleteFirstAidItem(req, res);
 
         expect(send).toHaveBeenCalledWith(expect.objectContaining(res.body));
