@@ -10,8 +10,7 @@ const getAllHygienes = (req, res) => {
     if (!req.user) {
       return res.status(401).send("Not Authenticated");
     }
-
-    return Hygiene.find({})
+    Hygiene.find({})
       .then((data) => {
         // console.log("======>", data);
         // console.log("1.Calling 'send'");
@@ -164,25 +163,39 @@ const updateHygiene = (req, res) => {
     //     });
     //   }
     // );
-    return Hygiene.findOne({ name: name }, function (err, hygiene) {
-      hygiene.name = req.body.name;
-      hygiene.quantity = req.body.quantity;
-      hygiene.purchaseDate = req.body.purchaseDate;
-      hygiene.save(
-        function (err) {
-        if (err instanceof mongoose.Error.ValidationError) {
+
+    const opts = { runValidators: true };
+    const updateHygieneDoc = {
+      name: req.body.name,
+      quantity: req.body.quantity,
+      purchaseDate: req.body.purchaseDate
+    };
+
+    return Hygiene.updateOne({ name: name }, updateHygiene, opts)
+      .then((data, err) => {
+        console.log("1. sending data");
+        // hygiene.name = req.body.name;
+        // hygiene.quantity = req.body.quantity;
+        // hygiene.purchaseDate = req.body.purchaseDate;
+        // hygiene.save(function (err) {
+        //   if (err instanceof mongoose.Error.ValidationError) {
+        //     res.status(422).send({ message: err.message || "Input can not be empty!" });
+        //   } else if (err) {
+        //     res.status(500).json(err || "Some error occurred while updating the hygiene item.");
+        //   } else {
+        res.status(204).send(data);
+        console.log("create function in hygiene controller", data);
+        console.log("=====>send the updated data");
+      })
+      .catch((err) => {
+        if (opts) {
           res.status(422).send({ message: err.message || "Input can not be empty!" });
-        } 
-        else if (err) {
-          res.status(500).json(err || "Some error occurred while updating the hygiene item.");
-        } 
-        else {
-          res.status(204).send();
-          console.log("=====>send the updated data");
-          
+        } else {
+          res.status(500).send({
+            message: err.message || "Some error occurred while updating the first-aid item."
+          });
         }
       });
-    });
   } catch (err) {
     res.status(500).json(err);
   }
