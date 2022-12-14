@@ -12,7 +12,7 @@ const getAllHygienes = (req, res) => {
     }
     Hygiene.find({})
       .then((data) => {
-        // console.log("======>", data);
+        console.log("data");
         // console.log("1.Calling 'send'");
         res.status(200).send(data);
       })
@@ -69,7 +69,9 @@ const getHygieneByName = (req, res) => {
 
     return Hygiene.find({ name: name })
       .then((data) => {
+        console.log("Get by name", data);
         res.status(200).send(data[0]);
+        console.log("Get by name", data);
       })
       .catch((err) => {
         res.status(500).send({
@@ -213,10 +215,13 @@ const deleteHygiene = (req, res) => {
       res.status(400).send({ message: "Name Invalid" });
       return;
     }
+    console.log("===>in delete function", req.params.name);
 
     return Hygiene.deleteOne({ name: name })
       .then((result) => {
+        console.log("Delete by name", result);
         res.status(200).send(result);
+        console.log("Delete by name", result);
       })
       .catch((err) => {
         res.status(500).send({

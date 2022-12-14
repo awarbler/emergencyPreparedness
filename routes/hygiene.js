@@ -1,6 +1,6 @@
 const express = require("express");
+
 const router = express.Router();
-// const mongoose = require("mongoose");
 
 const loadUser = require("../middleware/loadUser");
 const hygieneController = require("../controllers/hygiene");
