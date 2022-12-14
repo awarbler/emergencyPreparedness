@@ -1,5 +1,5 @@
 const hygieneRouter = require("../hygiene");
-const routesFor = require("../routesFor");
+const routesFor = require("./routesFor");
 
 const routes = routesFor(hygieneRouter);
 
