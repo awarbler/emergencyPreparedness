@@ -219,7 +219,7 @@ describe("createNewHygiene()", () => {
         await hygieneController.createNewHygiene(req, res);
 
         expect(send).toHaveBeenCalledWith({
-          message: "first-aids validation failed: purchaseDate: Path `purchaseDate` is required."
+          message: "hygiene validation failed: purchaseDate: Path `purchaseDate` is required."
         });
       });
     });
@@ -376,7 +376,7 @@ describe("updateHygiene()", () => {
         await hygieneController.createNewHygiene(req, res);
 
         expect(send).toHaveBeenCalledWith({
-          message: "first-aids validation failed: purchaseDate: Path `purchaseDate` is required."
+          message: "hygiene validation failed: purchaseDate: Path `purchaseDate` is required."
         });
       });
     });
@@ -426,13 +426,13 @@ describe("deleteHygiene()", () => {
       });
 
       it("responds with 200", async () => {
-        await hygieneController.deleteHygieneItem(req, res);
+        await hygieneController.deleteHygiene(req, res);
 
         expect(res.status).toHaveBeenCalledWith(200);
       });
 
       it("responds with successful deleted Hygiene item", async () => {
-        await hygieneController.deleteHygieneItem(req, res);
+        await hygieneController.deleteHygiene(req, res);
 
         expect(send).toHaveBeenCalledWith(expect.objectContaining(res.body));
         // console.log('===>>>', send)
