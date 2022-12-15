@@ -248,82 +248,9 @@ describe("updateFirstAidItem()", () => {
         identifier: "testUser"
       };
     });
-
-    // describe("when firstAid item exists", () => {
-    //   beforeEach(() => {
-    //     req.params = { name: "BandAid" };
-
-    //     data = [
-    //       {
-    //         name: "BandAid",
-    //         quantity: "18",
-    //         purchaseDate: "11/30/2022"
-    //       }
-    //     ];
-
-    //     res.body = [
-    //       {
-    //         name: "Band-aid",
-    //         quantity: "22",
-    //         purchaseDate: "12/3/2022"
-    //       }
-    //     ];
-
-    //     const finderMock = (query) => {
-    //       console.log(query.getQuery().name);
-    //       if (query.getQuery().name === "BandAid") {
-    //         return data;
-    //       }
-    //       return [];
-    //     };
-    //     mockingoose(FirstAid).toReturn(finderMock, "findOne").toReturn(res.body, "save");
-
-    //         res.body = [
-    //           {
-    //          name: "Band-aid",
-    //          quantity: "22",
-    //          purchaseDate: "12/3/2022"
-    //        }
-    //      ];
-
-    //         mockingoose(FirstAid).toReturn(res.body, "updateOne");
-    //   });
   
       describe("when firstAid item gets updated and is valid", () => {
           beforeEach(() => {
-      //       req.params = { name: "BandAid" }
-  
-      //         data = [
-      //              {
-      //             name: "BandAid",
-      //             quantity: "18",
-      //             purchaseDate: "11/30/2022"
-      //           }
-      //         ];
-
-      //         req.body = [
-      //           {
-      //          name: "Band-aid",
-      //          quantity: "22",
-      //          purchaseDate: "12/3/2022"
-      //        }
-      //      ];
-
-      //      res.body = [
-      //       {
-      //         acknowledged: true, modifiedCount: 1
-      //    }
-      //  ];
-           
-           
-      //         const finderMock = query => {   
-      //           console.log(query.getQuery().name)       
-      //             if (query.getQuery().name === "BandAid") {
-      //               return req.params;
-      //             }
-      //             return [];
-      //           }; 
-      //         mockingoose(FirstAid).toReturn(finderMock, "findOne").toReturn(res.body, "save");
 
           req.params = { name: "BandAid" };
 
