@@ -250,80 +250,10 @@ describe("updateHygiene()", () => {
       };
     });
 
-    // describe("when Hygiene item exists", () => {
-    //   beforeEach(() => {
-    //     req.params = { name: "Dial Soap" };
-
-    //     data = [
-    //       {
-    //         name: "Dial Soap",
-    //         quantity: "18",
-    //         purchaseDate: "11/30/2022"
-    //       }
-    //     ];
-
-    //     res.body = [
-    //       {
-    //         name: "dial soap",
-    //         quantity: "22",
-    //         purchaseDate: "12/3/2022"
-    //       }
-    //     ];
-
-    //     const finderMock = (query) => {
-    //       console.log(query.getQuery().name);
-    //       if (query.getQuery().name === "Dial Soap") {
-    //         return data;
-    //       }
-    //       return [];
-    //     };
-    //     mockingoose(hygiene).toReturn(finderMock, "findOne").toReturn(res.body, "save");
-
-    //         res.body = [
-    //           {
-    //          name: "dial soap",
-    //          quantity: "22",
-    //          purchaseDate: "12/3/2022"
-    //        }
-    //      ];
-
-    //         mockingoose(hygiene).toReturn(res.body, "updateOne");
-    //   });
 
     describe("when hygiene item gets updated and is valid", () => {
       beforeEach(() => {
-        //       req.params = { name: "Dial Soap" }
-
-        //         data = [
-        //              {
-        //             name: "Dial Soap",
-        //             quantity: "18",
-        //             purchaseDate: "11/30/2022"
-        //           }
-        //         ];
-
-        //         req.body = [
-        //           {
-        //          name: "dial soap",
-        //          quantity: "22",
-        //          purchaseDate: "12/3/2022"
-        //        }
-        //      ];
-
-        //      res.body = [
-        //       {
-        //         acknowledged: true, modifiedCount: 1
-        //    }
-        //  ];
-
-        //         const finderMock = query => {
-        //           console.log(query.getQuery().name)
-        //             if (query.getQuery().name === "Dial Soap") {
-        //               return req.params;
-        //             }
-        //             return [];
-        //           };
-        //         mockingoose(hygiene).toReturn(finderMock, "findOne").toReturn(res.body, "save");
+   
 
         req.params = { name: "Dial Soap" };
 
