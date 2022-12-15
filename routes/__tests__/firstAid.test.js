@@ -4,12 +4,7 @@ const routesFor = require("./routesFor");
 const routes = routesFor(firstAidRouter);
 
 describe("routes", () => {
-  // it("testing routes with console.log", () => {
-  //     console.log(firstAidRouter);
-  //     console.log(firstAidRouter.stack[1].route);
-  //     routesFor(firstAidRouter);
-  //     console.log(routesFor(firstAidRouter));
-  // })
+
   describe("/", () => {
     it("supports http GET request", () => {
       expect(routes["/"]).toContain("get");
