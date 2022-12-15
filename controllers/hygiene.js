@@ -136,35 +136,6 @@ const updateHygiene = (req, res) => {
       return;
     }
 
-    // if (!hygieneName) {
-    //   res.status(400).send("Must include name.");
-    // }
-
-    // if (!req.body.name || !req.body.quantity || !req.body.purchaseDate) {
-    //   res.status(400).send({ message: "Input can not be empty!" });
-    //   return;
-    // }
-
-    // return Hygiene.updateOne(
-    //   { name: name },
-    //   { quantity: quantity },
-    //   { purchaseDate: purchaseDate },
-    //   function (err, hygiene) {
-    //     hygiene.name = req.body.name;
-    //     hygiene.quantity = req.body.quantity;
-    //     hygiene.purchaseDate = req.body.purchaseDate;
-    //     hygiene.save(function (err) {
-    //       if (err instanceof mongoose.Error.ValidationError) {
-    //         res.status(422).send({ message: err.message || "Input is empty " });
-    //       } else if (err) {
-    //         res.status(500).json(err || "Some error occurred while creating the hygiene item.");
-    //       } else {
-    //         res.status(204).send();
-    //         console.log(res.status(204).send());
-    //       }
-    //     });
-    //   }
-    // );
 
     const opts = { runValidators: true };
     const updateHygieneDoc = {
@@ -176,15 +147,7 @@ const updateHygiene = (req, res) => {
     return Hygiene.updateOne({ name: name }, updateHygieneDoc, opts)
       .then((data, err) => {
         console.log("1. sending data");
-        // hygiene.name = req.body.name;
-        // hygiene.quantity = req.body.quantity;
-        // hygiene.purchaseDate = req.body.purchaseDate;
-        // hygiene.save(function (err) {
-        //   if (err instanceof mongoose.Error.ValidationError) {
-        //     res.status(422).send({ message: err.message || "Input can not be empty!" });
-        //   } else if (err) {
-        //     res.status(500).json(err || "Some error occurred while updating the hygiene item.");
-        //   } else {
+       
         res.status(204).send(data);
         console.log("create function in hygiene controller", data);
         // console.log("=====>send the updated data");
