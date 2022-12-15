@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const mongoose = require("mongoose");
 
 const getAllUsers = async (req, res) => {
   try {
@@ -24,7 +25,7 @@ const getUserByEmail = async (req, res) => {
       res.status(400).send("Must include email.");
     }
 
-    User.find({ email: email })
+    return User.find({ email: email })
       .then((data) => {
         res.status(200).send(data[0]);
       })
@@ -37,30 +38,6 @@ const getUserByEmail = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
-
-// const createNewUser = async (req, res) => {
-//   try {
-//     if (!req.body.userName || !req.body.email || !req.body.password) {
-//       res.status(400).send({ message: 'Input can not be empty!' });
-//       return;
-//     }
-
-//     const user = new User(req.body);
-//     user
-//       .save()
-//       .then((data) => {
-//         console.log(data);
-//         res.status(201).send(data);
-//       })
-//       .catch((err) => {
-//         res.status(500).send({
-//           message: err.message || 'Some error occurred while creating the user.'
-//         });
-//       });
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// };
 
 const updateUser = async (req, res) => {
   try {
@@ -76,19 +53,47 @@ const updateUser = async (req, res) => {
     //   return;
     // }
 
-    User.findOne({ email: email }, function (err, user) {
-      // user.userName = req.body.userName;
-      // user.email = req.body.email;
-      // user.password = req.body.password;
-      user.familyName = req.body.familyName;
-      user.save(function (err) {
-        if (err) {
-          res.status(500).json(err || "Some error occurred while updating the user.");
+    const opts = { runValidators: true };
+    const updateUserDoc = {
+      identifier: req.body.identifier,
+      email: req.body.email,
+      givenName: req.body.givenName,
+      familyName: req.body.familyName,
+      locale: req.body.locale,
+      picture: req.body.picture
+    };
+
+    // return User.updateOne({ email: email }, updateUserDoc, opts)
+    //   .then((data, err) => {
+    //     console.log("1. sending data");
+    //     res.status(204).send(data);
+    //     console.log("create function in hygiene controller", data);
+    //   })
+
+    //   .catch((err) => {
+    //     if (opts) {
+    //       res.status(422).send({ message: err.message || "Input can not be empty!" });
+    //     } else {
+    //       res.status(500).send({
+    //         message: err.message || "Some error occurred while updating the first-aid item."
+    //       });
+    //     }
+    //   });
+    return User.updateOne({ email: email }, updateUserDoc, opts)
+      .then((data, err) => {
+        console.log("1. sending the data");
+        res.status(204).send(data);
+        console.log("Create function in user controller", data);
+      })
+      .catch((err) => {
+        if (opts) {
+          res.status(422).send({ message: err.message || "Input can not be empty!" });
         } else {
-          res.status(204).send();
+          res.status(500).send({
+            message: err.message || "Some error occurred while updating the first-aid item."
+          });
         }
       });
-    });
   } catch (err) {
     res.status(500).json(err);
   }
@@ -102,14 +107,19 @@ const deleteUser = async (req, res) => {
       res.status(400).send({ message: "Email Invalid" });
       return;
     }
+    console.log("===>in delete function", req.params.email);
 
-    User.deleteOne({ email: email }, (err, result) => {
-      if (err) {
-        res.status(500).json(err || "Some error occurred while deleting the user.");
-      } else {
+    return User.deleteOne({ email: email })
+      .then((result) => {
+        console.log("Delete by email", result);
         res.status(200).send(result);
-      }
-    });
+        console.log("Delete by email", result);
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message: err.message || "Some error occurred while retrieving Hygienes."
+        });
+      });
   } catch (err) {
     res.status(500).json(err);
   }

@@ -407,7 +407,6 @@ describe("deleteHygiene()", () => {
         identifier: "testUser"
       };
     });
-
     describe("when Hygiene item gets deleted and is valid", () => {
       beforeEach(() => {
         req.params = { name: "dial soap" };
