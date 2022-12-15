@@ -122,80 +122,10 @@ describe("getUserByEmail()", () => {
 
 ///// updateUser /////
 describe("updateUser()", () => {
-  // describe("when user item exists", () => {
-  //   beforeEach(() => {
-  //     req.params = { email: "Dial Soap" };
-
-  //     data = [
-  //       {
-  //         email: "Dial Soap",
-  //         quantity: "18",
-  //         purchaseDate: "11/30/2022"
-  //       }
-  //     ];
-
-  //     res.body = [
-  //       {
-  //         email: "dial soap",
-  //         quantity: "22",
-  //         purchaseDate: "12/3/2022"
-  //       }
-  //     ];
-
-  //     const finderMock = (query) => {
-  //       console.log(query.getQuery().email);
-  //       if (query.getQuery().email === "Dial Soap") {
-  //         return data;
-  //       }
-  //       return [];
-  //     };
-  //     mockingoose(user).toReturn(finderMock, "findOne").toReturn(res.body, "save");
-
-  //         res.body = [
-  //           {
-  //          email: "dial soap",
-  //          quantity: "22",
-  //          purchaseDate: "12/3/2022"
-  //        }
-  //      ];
-
-  //         mockingoose(user).toReturn(res.body, "updateOne");
-  //   });
+ 
   describe("when user item gets updated and is valid", () => {
     beforeEach(() => {
-      //       req.params = { email: "Dial Soap" }
-
-      //         data = [
-      //              {
-      //             email: "Dial Soap",
-      //             quantity: "18",
-      //             purchaseDate: "11/30/2022"
-      //           }
-      //         ];
-
-      //         req.body = [
-      //           {
-      //          email: "dial soap",
-      //          quantity: "22",
-      //          purchaseDate: "12/3/2022"
-      //        }
-      //      ];
-
-      //      res.body = [
-      //       {
-      //         acknowledged: true, modifiedCount: 1
-      //    }
-      //  ];
-
-      //         const finderMock = query => {
-      //           console.log(query.getQuery().email)
-      //             if (query.getQuery().email === "Dial Soap") {
-      //               return req.params;
-      //             }
-      //             return [];
-      //           };
-      //         mockingoose(user).toReturn(finderMock, "findOne").toReturn(res.body, "save");
-
+    
       req.params = { email: "awoodbyui@gmail.com" };
 
       req.body = [
@@ -229,37 +159,7 @@ describe("updateUser()", () => {
       expect(send).toHaveBeenCalledWith(expect.objectContaining(req.body));
     });
   });
-  // describe("when the user item gets updated and is invalid", () => {
-  //   beforeEach(() => {
-  //     req.body = {
-  //       email: "awoodbyui@gmail.com",
-  //       givenName: "Anita",
-  //       familyName: "Woodford",
-  //       locale: "en"
-  //     };
-  //   });
-
-  //   it.only("responds with 422", async () => {
-  //     await userController.updateUser(req, res);
-
-  //     expect(res.status).toHaveBeenCalledWith(422);
-  //   });
-
-  //   it.only("responds with a validation error", async () => {
-  //     await userController.updateUser(req, res);
-
-  //     // expect(send).toHaveBeenCalledWith({
-  //     //   message: "User validation failed: purchaseDate: Path `purchaseDate` is required."
-  //     // });
-  //     expect(send).toHaveBeenCalledWith({
-  //       message: "users validation failed: picture: Path `picture` is required."
-  //     });
-  //   });
-  // });
-});
-// });
-
-// });
+ 
 
 ///// deleteUserItem /////
 describe("deleteUser()", () => {
