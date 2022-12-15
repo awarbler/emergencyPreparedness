@@ -8,8 +8,7 @@ const authorizationController = {
     }/authorize?response_type=code&client_id=${
       appConfig.clientID
     }&redirect_uri=${encodeURIComponent(appConfig.redirectUrl)}&scope=openid%20profile%20email`;
-    // console.log(authorizationUrl);
-    // console.log(appConfig.authorizationHost);
+
 
     res.redirect(authorizationUrl);
   },
