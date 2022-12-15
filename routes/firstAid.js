@@ -1,13 +1,7 @@
 const express = require("express");
 //routes
 const router = express.Router();
-// const { body, param } = require('express-validator');
-// const {
-//     createValidator,
-//     showValidator,
-//     updateValidator,
-//     destroyValidator
-// } = require('../validators/firstAidValidator.js');
+
 const loadUser = require("../middleware/loadUser");
 const firstAidController = require("../controllers/firstAid");
 
